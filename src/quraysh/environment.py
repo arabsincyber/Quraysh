@@ -15,6 +15,7 @@ class Environment:
     def __init__(self, parent=None):
         self.vars: Dict[str, Any] = {}
         self.parent = parent
+        self.macros: Dict[str, Any] = {}  # الماكروز
 
     def get(self, name: str):
         """جلب قيمة متغير."""
@@ -28,6 +29,18 @@ class Environment:
         """تعيين قيمة متغير."""
         self.vars[name] = value
         return value
+
+    def get_macro(self, name: str):
+        """جلب ماكرو."""
+        if name in self.macros:
+            return self.macros[name]
+        if self.parent:
+            return self.parent.get_macro(name)
+        return None
+
+    def set_macro(self, name: str, func):
+        """تعريف ماكرو."""
+        self.macros[name] = func
 
 
 # ============================================================
@@ -45,20 +58,17 @@ def قَسَم(a, b): return a / b
 def بَقِي(a, b): return a % b
 
 
-# مقارنات
 def أعظم(a, b): return a > b
 def أدنى(a, b): return a < b
 def نظير(a, b): return a == b
 
 
-# عمليات مكارثي
 def أوّل(ق): return ق[0]
 def بَقِيَّة(ق): return ق[1:] if len(ق) > 1 else []
 def ضُمَّ(ع, ق): return [ع] + ق
 def واحِد(ش): return not isinstance(ش, list)
 
 
-# رياضيات
 def جذر(ن): return math.sqrt(ن)
 def مطلق(ن): return abs(ن)
 def قوة(أ, ب): return أ ** ب
@@ -66,15 +76,23 @@ def زوجي(ن): return ن % 2 == 0
 def فردي(ن): return ن % 2 != 0
 
 
-# شروط
 def إنْ(شرط, صح, خطأ):
     return صح if شرط else خطأ
 
 
-# طباعة
 def اطبع(*args):
     print(*args)
     return None
+
+
+def قائمة(*args):
+    """إنشاء قائمة — مفيد للماكروز"""
+    return list(args)
+
+
+def اقتبس(x):
+    """اقتباس — يمنع التقييم"""
+    return x
 
 
 # ============================================================
@@ -92,7 +110,7 @@ def build_default_env() -> Environment:
     env.vars['قَسَم'] = قَسَم
     env.vars['بَقِي'] = بَقِي
 
-    # الرموز المختصرة
+    # الرموز
     env.vars['+'] = ألّم
     env.vars['-'] = انقص
     env.vars['*'] = جَلَد
@@ -107,7 +125,7 @@ def build_default_env() -> Environment:
     env.vars['<'] = أدنى
     env.vars['='] = نظير
 
-    # عمليات مكارثي
+    # مكارثي
     env.vars['أوّل'] = أوّل
     env.vars['بَقِيَّة'] = بَقِيَّة
     env.vars['ضُمَّ'] = ضُمَّ
@@ -127,6 +145,12 @@ def build_default_env() -> Environment:
     # طباعة
     env.vars['اطبع'] = اطبع
 
+    # قوائم (للماكروز)
+    env.vars['قائمة'] = قائمة
+    env.vars['list'] = قائمة
+    env.vars['اقتبس'] = اقتبس
+    env.vars['quote'] = اقتبس
+
     # ثوابت
     env.vars['أجل'] = True
     env.vars['كلا'] = False
@@ -141,5 +165,4 @@ if __name__ == "__main__":
     print("أمثلة:")
     print("  (ألّم 1 2 3)  =>", env.get('ألّم')(1, 2, 3))
     print("  (جَلَد 4 5)   =>", env.get('جَلَد')(4, 5))
-    print("  (جذر 16)     =>", env.get('جذر')(16))
-    print("  (زوجي 8)     =>", env.get('زوجي')(8))
+    print("  (قائمة 1 2 3) =>", env.get('قائمة')(1, 2, 3))
