@@ -3,10 +3,17 @@ REPL — الواجهة التفاعلية
 =========================
 
 Read-Eval-Print Loop — الواجهة التفاعلية للمستخدم.
+
+الميزات:
+- تشغيل تفاعلي (REPL)
+- تشغيل ملفات مع فحص العقد الأمني
+- عرض بانر جميل
 """
 
 import sys
+from pathlib import Path
 from .evaluator import Quraysh
+from .security import parse_contract, SecurityViolation
 
 
 BANNER = """
@@ -17,6 +24,8 @@ BANNER = """
 ║   لغة برمجة عربية كاملة                  ║
 ║   الإصدار 2.0.0                          ║
 ║                                          ║
+║   🔒 الأمان بالوضوح                       ║
+║                                          ║
 ╚══════════════════════════════════════════╝
 
 اكتب (انصرف) للخروج
@@ -24,6 +33,10 @@ BANNER = """
 
 PROMPT = "قريش> "
 
+
+# ============================================================
+#  REPL التفاعلي
+# ============================================================
 
 def main():
     """نقطة الدخول — المفسر التفاعلي."""
@@ -33,10 +46,8 @@ def main():
 
     while True:
         try:
-            # قراءة السطر
             line = input(PROMPT).strip()
 
-            # تجاهل الفراغ
             if not line:
                 continue
 
@@ -61,18 +72,66 @@ def main():
             print(f"خطأ غير متوقع: {e}")
 
 
+# ============================================================
+#  تشغيل ملف — مع فحص العقد الأمني
+# ============================================================
+
 def run_file(path: str):
-    """تشغيل ملف."""
+    """تشغيل ملف مع التحقق من العقد الأمني."""
+
+    # 1. قراءة الملف
+    try:
+        source = Path(path).read_text(encoding="utf-8")
+    except FileNotFoundError:
+        print(f"❌ الملف غير موجود: {path}", file=sys.stderr)
+        sys.exit(1)
+    except Exception as e:
+        print(f"❌ خطأ في قراءة الملف: {e}", file=sys.stderr)
+        sys.exit(1)
+
+    # 2. فحص العقد الأمني
+    print("🔍 فحص العقد الأمني...")
+    print()
+
+    try:
+        عقد = parse_contract(source)
+        print(عقد.ملخص())
+        print()
+
+        # إذا ما فيه عقد → تحذير
+        if not عقد.اسم_المطور or عقد.اسم_المطور == "غير معروف":
+            print("⚠️  تحذير: الملف لا يحتوي على عقد أمني")
+            print()
+            response = input("    هل تريد المتابعة على مسؤوليتك؟ [y/N]: ")
+            if response.lower() != "y":
+                print("🚫 تم إلغاء التشغيل")
+                sys.exit(1)
+        else:
+            print("✅ العقد صحيح")
+
+    except SecurityViolation as e:
+        print(f"🚫 انتهاك أمني: {e}", file=sys.stderr)
+        sys.exit(1)
+
+    # 3. التشغيل
+    print("─" * 44)
+    print()
+
     q = Quraysh()
     try:
         q.eval_file(path)
-    except FileNotFoundError:
-        print(f"الملف غير موجود: {path}", file=sys.stderr)
-        sys.exit(1)
     except Exception as e:
-        print(f"خطأ: {e}", file=sys.stderr)
+        print(f"❌ خطأ في التنفيذ: {e}", file=sys.stderr)
         sys.exit(1)
 
+    print()
+    print("─" * 44)
+    print("✅ اكتمل التنفيذ بنجاح")
+
+
+# ============================================================
+#  نقطة الدخول
+# ============================================================
 
 if __name__ == "__main__":
     # إذا فيه معامل — تشغيل ملف
