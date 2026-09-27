@@ -7,13 +7,14 @@ Read-Eval-Print Loop — الواجهة التفاعلية للمستخدم.
 الميزات:
 - تشغيل تفاعلي (REPL)
 - تشغيل ملفات مع فحص العقد الأمني
-- عرض بانر جميل
+- الصندوق الزجاجي (محاكاة قبل التنفيذ)
 """
 
 import sys
 from pathlib import Path
 from .evaluator import Quraysh
 from .security import parse_contract, SecurityViolation
+from .sandbox import Sandbox, عرض_المحاكاة
 
 
 BANNER = """
@@ -22,7 +23,7 @@ BANNER = """
 ║      🕋  لسان قريش — Quraysh  🕋          ║
 ║                                          ║
 ║   لغة برمجة عربية كاملة                  ║
-║   الإصدار 2.0.0                          ║
+║   الإصدار 2.1.0                          ║
 ║                                          ║
 ║   🔒 الأمان بالوضوح                       ║
 ║                                          ║
@@ -41,22 +42,18 @@ PROMPT = "قريش> "
 def main():
     """نقطة الدخول — المفسر التفاعلي."""
     q = Quraysh()
-
     print(BANNER)
 
     while True:
         try:
             line = input(PROMPT).strip()
-
             if not line:
                 continue
 
-            # الخروج
             if line in ("(انصرف)", "انصرف", "(خروج)", "خروج", "exit", "quit"):
                 print("مع السلامة 💙")
                 break
 
-            # التقييم
             try:
                 result = q.eval_string(line)
                 if result is not None:
@@ -73,11 +70,11 @@ def main():
 
 
 # ============================================================
-#  تشغيل ملف — مع فحص العقد الأمني
+#  تشغيل ملف — مع الصندوق الزجاجي
 # ============================================================
 
-def run_file(path: str):
-    """تشغيل ملف مع التحقق من العقد الأمني."""
+def run_file(path: str, skip_sandbox: bool = False):
+    """تشغيل ملف مع التحقق الأمني والمحاكاة."""
 
     # 1. قراءة الملف
     try:
@@ -89,16 +86,15 @@ def run_file(path: str):
         print(f"❌ خطأ في قراءة الملف: {e}", file=sys.stderr)
         sys.exit(1)
 
-    # 2. فحص العقد الأمني
     print("🔍 فحص العقد الأمني...")
     print()
 
+    # 2. فحص العقد الأمني
     try:
         عقد = parse_contract(source)
         print(عقد.ملخص())
         print()
 
-        # إذا ما فيه عقد → تحذير
         if not عقد.اسم_المطور or عقد.اسم_المطور == "غير معروف":
             print("⚠️  تحذير: الملف لا يحتوي على عقد أمني")
             print()
@@ -113,7 +109,30 @@ def run_file(path: str):
         print(f"🚫 انتهاك أمني: {e}", file=sys.stderr)
         sys.exit(1)
 
-    # 3. التشغيل
+    # 3. الصندوق الزجاجي (المحاكاة)
+    if not skip_sandbox:
+        print()
+        print("🔍 جاري تحليل العمليات...")
+
+        sb = Sandbox()
+        عمليات = sb.حلل(source)
+
+        print(عرض_المحاكاة(عمليات, sb.الأذونات_المستخدمة))
+
+        # طلب الموافقة
+        try:
+            response = input("هل تريد التنفيذ الفعلي؟ [Y/n]: ").strip().lower()
+            if response and response != "y":
+                print("🚫 تم إلغاء التنفيذ")
+                sys.exit(0)
+        except (KeyboardInterrupt, EOFError):
+            print()
+            print("🚫 تم إلغاء التنفيذ")
+            sys.exit(0)
+
+    # 4. التنفيذ
+    print()
+    print("🚀 التنفيذ:")
     print("─" * 44)
     print()
 
@@ -134,8 +153,14 @@ def run_file(path: str):
 # ============================================================
 
 if __name__ == "__main__":
-    # إذا فيه معامل — تشغيل ملف
-    if len(sys.argv) > 1:
-        run_file(sys.argv[1])
+    args = sys.argv[1:]
+
+    # خيار تخطي الصندوق الزجاجي
+    skip = "--no-sandbox" in args
+    if skip:
+        args.remove("--no-sandbox")
+
+    if args:
+        run_file(args[0], skip_sandbox=skip)
     else:
         main()
