@@ -2,7 +2,11 @@
 Parser — المحلل النحوي
 ======================
 
-يحوّل قائمة الرموز إلى شجرة تعبيرات (AST).
+يحوّل الرموز إلى شجرة تعبيرات.
+
+يدعم:
+- الأقواس
+- الاقتباس ('x) — يتحول إلى (قُلها x)
 """
 
 from typing import List, Union
@@ -12,12 +16,10 @@ Expression = Union[int, float, str, list]
 
 
 class ParserError(Exception):
-    """خطأ في التحليل النحوي"""
     pass
 
 
 def atom(token: str) -> Expression:
-    """يحوّل الرمز إلى قيمة (رقم، نص، أو رمز)."""
     try:
         return int(token)
     except ValueError:
@@ -35,12 +37,12 @@ def atom(token: str) -> Expression:
 
 
 def parse(tokens: List[str]) -> Expression:
-    """يحوّل قائمة الرموز إلى شجرة تعبير."""
     if not tokens:
         raise ParserError("قائمة الرموز فارغة")
 
     token = tokens.pop(0)
 
+    # قوس فتح
     if token == "(":
         lst = []
         while tokens and tokens[0] != ")":
@@ -50,31 +52,35 @@ def parse(tokens: List[str]) -> Expression:
         tokens.pop(0)
         return lst
 
+    # قوس إغلاق
     elif token == ")":
         raise ParserError("قوس مغلق غير متوقع: )")
+
+    # اقتباس 'x → (قُلها x)
+    elif token == "'":
+        if not tokens:
+            raise ParserError("اقتباس بدون تعبير: '")
+        quoted = parse(tokens)
+        return ['قُلها', quoted]
 
     return atom(token)
 
 
 def parse_all(text: str) -> List[Expression]:
-    """يحلّل نص كامل (عدة تعبيرات)."""
     tokens = tokenize(text)
     expressions = []
-
     while tokens:
         expressions.append(parse(tokens))
-
     return expressions
 
 
 if __name__ == "__main__":
-    from .lexer import tokenize
-
     tests = [
         "(+ 5 3)",
-        '(اطبع "السلام عليكم")',
-        "(ألّم ٥ ٣)",
-        "(+ 1 2) (* 3 4)",
+        "(قيّم '(+ 1 2))",
+        "(قيّم 'س)",
+        "(قيّم '(مربع 7))",
+        "(طبّق + '(1 2 3))",
     ]
 
     for test in tests:

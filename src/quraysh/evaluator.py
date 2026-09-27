@@ -9,7 +9,8 @@ Evaluator — المُقيِّم
 - تعريف (define)
 - لامدا (lambda)
 - ماكرو (macro)
-- إنْ (if)
+- إنْ / إذا (if-else)
+- قيّم (eval) — تقييم ديناميكي
 """
 
 from .lexer import tokenize
@@ -18,7 +19,7 @@ from .environment import build_default_env, Environment
 
 
 # ============================================================
-#  دوال خاصة (Special Forms)
+#  Lambda & Macro
 # ============================================================
 
 class Lambda:
@@ -28,33 +29,28 @@ class Lambda:
         self.params = params
         self.body = body
         self.env = env
-        self.interpreter = interpreter  # ← نحتفظ بالمُقيِّم
+        self.interpreter = interpreter
 
     def __call__(self, *args):
-        # إنشاء بيئة جديدة
         new_env = Environment(parent=self.env)
-
-        # ربط المعاملات
         for param, value in zip(self.params, args):
             new_env.set(param, value)
 
-        # تقييم الجسم باستخدام نفس المُقيِّم
         body = self.body
-        if isinstance(body, list) and not isinstance(body[0], str):
-            # قائمة من التعبيرات
+        if isinstance(body, list) and len(body) > 1 and isinstance(body[0], list):
+            # قائمة من التعبيرات (جسم متعدد)
             result = None
             for expr in body:
                 result = self.interpreter.eval(expr, new_env)
             return result
-        else:
-            return self.interpreter.eval(body, new_env)
+        return self.interpreter.eval(body, new_env)
 
     def __repr__(self):
         return f"<لامدا ({' '.join(self.params)})>"
 
 
 class Macro:
-    """ماكرو — يُنفّذ في وقت التوسيع"""
+    """ماكرو"""
 
     def __init__(self, params, body, env, interpreter):
         self.params = params
@@ -63,14 +59,11 @@ class Macro:
         self.interpreter = interpreter
 
     def expand(self, args):
-        """يوسّع الماكرو إلى كود"""
         new_env = Environment(parent=self.env)
-
         for param, value in zip(self.params, args):
             new_env.set(param, value)
 
-        # تقييم جسم الماكرو
-        if isinstance(self.body, list) and not isinstance(self.body[0], str):
+        if isinstance(self.body, list) and len(self.body) > 1 and isinstance(self.body[0], list):
             result = None
             for expr in self.body:
                 result = self.interpreter.eval(expr, new_env)
@@ -86,7 +79,7 @@ class Macro:
 # ============================================================
 
 class Quraysh:
-    """مفسّر لسان قريش — الواجهة الرئيسية."""
+    """مفسّر لسان قريش."""
 
     def __init__(self, env: Environment = None):
         self.env = env or build_default_env()
@@ -96,11 +89,11 @@ class Quraysh:
         if env is None:
             env = self.env
 
-        # 1. الأرقام والنصوص والمنطقية
+        # 1. الأرقام والمنطقية
         if isinstance(expr, (int, float, bool)):
             return expr
 
-        # 2. الرموز (متغيرات ودوال)
+        # 2. الرموز
         if isinstance(expr, str):
             try:
                 return env.get(expr)
@@ -120,6 +113,22 @@ class Quraysh:
             if head in ('قُلها', 'quote', 'اقتبس'):
                 return expr[1] if len(expr) > 1 else None
 
+            # (قيّم x) — تقييم ديناميكي
+            if head in ('قيّم', 'قيم', 'eval'):
+                if len(expr) != 2:
+                    raise ValueError("قيّم: (قيّم تعبير)")
+                # نقيّم المعامل أولاً — ثم نقيّم الناتج
+                expanded = self.eval(expr[1], env)
+                return self.eval(expanded, env)
+
+            # (طبّق دالة args)
+            if head in ('طبّق', 'apply'):
+                if len(expr) < 3:
+                    raise ValueError("طبّق: (طبّق دالة قائمة)")
+                func = self.eval(expr[1], env)
+                args = self.eval(expr[2], env)
+                return func(*args)
+
             # (تعريف اسم قيمة)
             if head in ('تعريف', 'عرّف', 'define'):
                 if len(expr) != 3:
@@ -135,8 +144,8 @@ class Quraysh:
                     raise ValueError("لامدا: (لامدا (معاملات) جسم)")
                 params = expr[1] if isinstance(expr[1], list) else [expr[1]]
                 params = [p if isinstance(p, str) else str(p) for p in params]
-                body = expr[2]
-                return Lambda(params, body, env, self)
+                body = expr[2:]
+                return Lambda(params, body if len(body) > 1 else body[0], env, self)
 
             # (ماكرو اسم (معاملات) جسم)
             if head in ('ماكرو', 'macro'):
@@ -145,8 +154,8 @@ class Quraysh:
                 name = expr[1]
                 params = expr[2] if isinstance(expr[2], list) else [expr[2]]
                 params = [p if isinstance(p, str) else str(p) for p in params]
-                body = expr[3]
-                macro = Macro(params, body, env, self)
+                body = expr[3:]
+                macro = Macro(params, body if len(body) > 1 else body[0], env, self)
                 env.set_macro(name, macro)
                 return None
 
@@ -159,7 +168,7 @@ class Quraysh:
                     return self.eval(expr[2], env)
                 return self.eval(expr[3], env)
 
-            # (إذا شرط صح خطأ)
+            # (إذا شرط صح خطأ) / (إذا شرط صح)
             if head == 'إذا':
                 if len(expr) == 4:
                     شرط = self.eval(expr[1], env)
@@ -222,18 +231,21 @@ if __name__ == "__main__":
 
     tests = [
         "(+ 5 3)",
-        "(ألّم 1 2 3 4 5)",
+        "(قيّم '(+ 1 2))",
+        "(قيّم '(* 3 4))",
+        "(قيّم '(ألّم 10 20 30))",
         "(تعريف س 10)",
         "س",
+        "(قيّم 'س)",
         "(تعريف مربع (لامدا (ن) (* ن ن)))",
         "(مربع 5)",
-        "(مربع 7)",
-        "(إنْ (أعظم 5 3) 100 200)",
+        "(قيّم '(مربع 7))",
+        "(طبّق + '(1 2 3))",
     ]
 
     for code in tests:
         try:
             result = q.eval_string(code)
-            print(f"✓ {code:45} => {result}")
+            print(f"✓ {code:35} => {result}")
         except Exception as e:
-            print(f"✗ {code:45} => خطأ: {e}")
+            print(f"✗ {code:35} => خطأ: {e}")
