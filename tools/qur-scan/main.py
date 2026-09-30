@@ -5,6 +5,8 @@ qur-scan — نقطة الدخول
 import sys
 from . import __version__
 from . import system
+from . import processes
+from . import live
 
 
 BANNER = """
@@ -13,7 +15,7 @@ BANNER = """
 ║      🔍  qur-scan — فحص الجهاز  🔍       ║
 ║                                          ║
 ║   أداة عربية لمراقبة نظامك                ║
-║   الإصدار 0.1.0                          ║
+║   الإصدار 0.3.0                          ║
 ║                                          ║
 ╚══════════════════════════════════════════╝
 
@@ -21,80 +23,120 @@ BANNER = """
 """
 
 
-# ═══════════════════════════════════════════════════════════
-#  الأوامر
-# ═══════════════════════════════════════════════════════════
-
 def cmd_info(args):
-    """معلومات النظام"""
-    system.run_all()
-    return 0
+    system.run_all(); return 0
 
 
 def cmd_cpu(args):
-    """CPU"""
-    system.cpu()
-    return 0
+    system.cpu(); return 0
 
 
 def cmd_ram(args):
-    """RAM"""
-    system.ram()
-    return 0
+    system.ram(); return 0
 
 
 def cmd_storage(args):
-    """التخزين"""
-    system.storage()
-    return 0
+    system.storage(); return 0
 
 
 def cmd_kernel(args):
-    """النواة"""
-    system.kernel()
-    return 0
+    system.kernel(); return 0
 
 
 def cmd_android(args):
-    """أندرويد"""
-    system.android()
-    return 0
+    system.android(); return 0
+
+
+def cmd_processes(args):
+    processes.processes(); return 0
+
+
+def cmd_top_cpu(args):
+    processes.top_cpu(); return 0
+
+
+def cmd_top_ram(args):
+    processes.top_ram(); return 0
+
+
+def cmd_search(args):
+    if not args:
+        print("❌ الاستخدام: qur-scan search <name>")
+        return 1
+    processes.search(args[0]); return 0
+
+
+def cmd_kill(args):
+    if not args:
+        print("❌ الاستخدام: qur-scan kill <PID>")
+        return 1
+    processes.kill(args[0]); return 0
+
+
+def cmd_live_cpu(args):
+    live.live_cpu(interval=1, count=5); return 0
+
+
+def cmd_live_ram(args):
+    live.live_ram(interval=1, count=5); return 0
+
+
+def cmd_live_processes(args):
+    live.live_processes(interval=1, count=5); return 0
+
+
+def cmd_environment(args):
+    live.environment(); return 0
+
+
+def cmd_report(args):
+    live.report(); return 0
 
 
 def cmd_list(args):
-    """عرض الأوامر"""
     print(BANNER)
     print("🛠️  الأوامر المتاحة:")
     print()
-    print("  qur-scan info       معلومات النظام (5)")
-    print("  qur-scan cpu        المعالج")
-    print("  qur-scan ram        الذاكرة")
-    print("  qur-scan storage    التخزين")
-    print("  qur-scan kernel     النواة")
-    print("  qur-scan android    أندرويد")
-    print("  qur-scan list       عرض الأوامر")
-    print("  qur-scan version    الإصدار")
-    print("  qur-scan help       المساعدة")
+    print("  📊 النظام:")
+    print("    qur-scan info           معلومات النظام (5)")
+    print("    qur-scan cpu            المعالج")
+    print("    qur-scan ram            الذاكرة")
+    print("    qur-scan storage        التخزين")
+    print("    qur-scan kernel         النواة")
+    print("    qur-scan android        أندرويد")
+    print()
+    print("  📋 العمليات:")
+    print("    qur-scan processes      قائمة العمليات")
+    print("    qur-scan top-cpu        أعلى CPU")
+    print("    qur-scan top-ram        أعلى RAM")
+    print("    qur-scan search         بحث")
+    print("    qur-scan kill           إنهاء عملية")
+    print()
+    print("  📡 المراقبة:")
+    print("    qur-scan live-cpu       مراقبة CPU")
+    print("    qur-scan live-ram       مراقبة RAM")
+    print("    qur-scan live-processes العمليات")
+    print("    qur-scan environment    البيئة")
+    print("    qur-scan report         تقرير")
+    print()
+    print("  🔧 عام:")
+    print("    qur-scan list           الأوامر")
+    print("    qur-scan version        الإصدار")
+    print("    qur-scan help           المساعدة")
     print()
     return 0
 
 
 def cmd_version(args):
-    """الإصدار"""
     print(f"qur-scan — الإصدار {__version__}")
     return 0
 
 
 def cmd_help(args):
-    """المساعدة"""
     print(BANNER)
     cmd_list([])
     return 0
 
-
-# ═══════════════════════════════════════════════════════════
-#  نقطة الدخول
-# ═══════════════════════════════════════════════════════════
 
 الأوامر = {
     'info': cmd_info,
@@ -103,6 +145,16 @@ def cmd_help(args):
     'storage': cmd_storage,
     'kernel': cmd_kernel,
     'android': cmd_android,
+    'processes': cmd_processes,
+    'top-cpu': cmd_top_cpu,
+    'top-ram': cmd_top_ram,
+    'search': cmd_search,
+    'kill': cmd_kill,
+    'live-cpu': cmd_live_cpu,
+    'live-ram': cmd_live_ram,
+    'live-processes': cmd_live_processes,
+    'environment': cmd_environment,
+    'report': cmd_report,
     'list': cmd_list,
     'version': cmd_version,
     'help': cmd_help,
