@@ -7,7 +7,7 @@ import sys
 from pathlib import Path
 
 from . import __version__
-from .commands import pkg, fmt, build
+from .commands import pkg, fmt, build, doc
 
 
 BANNER = """
@@ -38,7 +38,6 @@ def cmd_new(args):
     (مسار / "main.lisp").write_text("; مشروع جديد\n(اطبع \"السلام عليكم\")\n")
     (مسار / ".gitignore").write_text("__pycache__/\n*.pyc\n")
     print(f"✅ تم إنشاء المشروع: {اسم}")
-    print(f"📁 المسار: {مسار.absolute()}")
     return 0
 
 
@@ -114,6 +113,10 @@ def cmd_build(args):
     return build.run(args)
 
 
+def cmd_doc(args):
+    return doc.run(args)
+
+
 def cmd_list(args):
     print(BANNER)
     print("🛠️  الأوامر المتاحة:")
@@ -125,6 +128,7 @@ def cmd_list(args):
     print("  qur pkg <أمر>              مدير الحزم")
     print("  qur fmt <أمر>              منسّق الكود")
     print("  qur build [--check]        بناء المشروع")
+    print("  qur doc <file|--all>       توليد الوثائق")
     print("  qur list                   عرض الأوامر")
     print("  qur version                عرض الإصدار")
     print("  qur help                   المساعدة")
@@ -155,6 +159,7 @@ def cmd_help(args):
     'pkg': cmd_pkg,
     'fmt': cmd_fmt,
     'build': cmd_build,
+    'doc': cmd_doc,
     'list': cmd_list,
     'version': cmd_version,
     'help': cmd_help,
