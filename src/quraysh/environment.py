@@ -10,6 +10,7 @@ Environment — البيئة والدوال
 - عمليات مكارثي
 - الرياضيات الأساسية
 - FORTRAN (الحسابات العلمية)
+- BASIC (التعليمية)
 - معالجة النصوص
 - قوائم متقدمة
 - أدوات
@@ -34,7 +35,19 @@ try:
     FORTRAN_AVAILABLE = True
 except ImportError:
     FORTRAN_AVAILABLE = False
-    print("⚠️  تحذير: مكتبة FORTRAN غير متوفرة")
+
+# استيراد BASIC
+try:
+    from .basic import (
+        اقرأ, اقرأ_رقم, اقرأ_عدد,
+        كرر_من_إلى, كرر_خطوة,
+        طول_نص, جزء_نص, يسار, يمين,
+        رمز, حرف, عشوائي,
+        تقريب_عدد, صحيح, مطلق_عدد, إشارة,
+    )
+    BASIC_AVAILABLE = True
+except ImportError:
+    BASIC_AVAILABLE = False
 
 
 class Environment:
@@ -112,40 +125,6 @@ def فردي(ن): return ن % 2 != 0
 
 
 # ═══════════════════════════════════════════════════════════
-#  معالجة النصوص
-# ═══════════════════════════════════════════════════════════
-
-def طول(نص): return len(نص)
-def انشقاق(نص, فاصل=" "): return نص.split(فاصل)
-def دمج(*args): return "".join(str(a) for a in args)
-def جزء(نص, بداية, نهاية=None):
-    if نهاية is None: return نص[بداية:]
-    return نص[بداية:نهاية]
-def يحتوي(نص, بحث): return بحث in نص
-def استبدال(نص, قديم, جديد): return نص.replace(قديم, جديد)
-def كبير(نص): return نص.upper()
-def صغير(نص): return نص.lower()
-def شذّب(نص): return نص.strip()
-def نص(ش): return str(ش)
-def رقم(نص_أو_رقم):
-    try: return int(نص_أو_رقم)
-    except (ValueError, TypeError):
-        try: return float(نص_أو_رقم)
-        except (ValueError, TypeError):
-            raise ValueError(f"ليس رقماً: {نص_أو_رقم}")
-
-
-# ═══════════════════════════════════════════════════════════
-#  قوائم متقدمة
-# ═══════════════════════════════════════════════════════════
-
-def قائمة(*args): return list(args)
-def أضف(ق, عنصر): return ق + [عنصر]
-def عنصر(ق, فهرس): return ق[فهرس]
-def مدى(بداية, نهاية): return list(range(بداية, نهاية))
-
-
-# ═══════════════════════════════════════════════════════════
 #  أدوات
 # ═══════════════════════════════════════════════════════════
 
@@ -191,14 +170,14 @@ def build_default_env() -> Environment:
     env.vars['واحِد'] = واحِد
     env.vars['قُلها'] = lambda x: x
 
-    # الرياضيات الأساسية
+    # الرياضيات
     env.vars['جذر'] = جذر
     env.vars['مطلق'] = مطلق
     env.vars['قوة'] = قوة
     env.vars['زوجي'] = زوجي
     env.vars['فردي'] = فردي
 
-    # ═══ FORTRAN — الحسابات العلمية ═══
+    # ═══ FORTRAN ═══
     if FORTRAN_AVAILABLE:
         env.vars['جيب'] = جيب
         env.vars['جيب_تمام'] = جيب_تمام
@@ -230,25 +209,44 @@ def build_default_env() -> Environment:
         env.vars['باي'] = باي
         env.vars['هـ'] = هـ
 
+    # ═══ BASIC ═══
+    if BASIC_AVAILABLE:
+        env.vars['اقرأ'] = اقرأ
+        env.vars['اقرأ_رقم'] = اقرأ_رقم
+        env.vars['اقرأ_عدد'] = اقرأ_عدد
+        env.vars['كرر_من_إلى'] = كرر_من_إلى
+        env.vars['كرر_خطوة'] = كرر_خطوة
+        env.vars['طول_نص'] = طول_نص
+        env.vars['جزء_نص'] = جزء_نص
+        env.vars['يسار'] = يسار
+        env.vars['يمين'] = يمين
+        env.vars['رمز'] = رمز
+        env.vars['حرف'] = حرف
+        env.vars['عشوائي'] = عشوائي
+        env.vars['تقريب_عدد'] = تقريب_عدد
+        env.vars['صحيح'] = صحيح
+        env.vars['مطلق_عدد'] = مطلق_عدد
+        env.vars['إشارة'] = إشارة
+
     # معالجة النصوص
-    env.vars['طول'] = طول
-    env.vars['انشقاق'] = انشقاق
-    env.vars['دمج'] = دمج
-    env.vars['جزء'] = جزء
-    env.vars['يحتوي'] = يحتوي
-    env.vars['استبدال'] = استبدال
-    env.vars['كبير'] = كبير
-    env.vars['صغير'] = صغير
-    env.vars['شذّب'] = شذّب
-    env.vars['نص'] = نص
-    env.vars['رقم'] = رقم
+    env.vars['طول'] = len
+    env.vars['انشقاق'] = lambda نص, فاصل=" ": نص.split(فاصل)
+    env.vars['دمج'] = lambda *args: "".join(str(a) for a in args)
+    env.vars['جزء'] = lambda نص, بداية, نهاية=None: نص[بداية:] if نهاية is None else نص[بداية:نهاية]
+    env.vars['يحتوي'] = lambda نص, بحث: بحث in نص
+    env.vars['استبدال'] = lambda نص, قديم, جديد: نص.replace(قديم, جديد)
+    env.vars['كبير'] = lambda نص: نص.upper()
+    env.vars['صغير'] = lambda نص: نص.lower()
+    env.vars['شذّب'] = lambda نص: نص.strip()
+    env.vars['نص'] = str
+    env.vars['رقم'] = lambda x: int(x) if str(x).isdigit() else float(x)
 
     # قوائم
-    env.vars['قائمة'] = قائمة
-    env.vars['list'] = قائمة
-    env.vars['أضف'] = أضف
-    env.vars['عنصر'] = عنصر
-    env.vars['مدى'] = مدى
+    env.vars['قائمة'] = lambda *args: list(args)
+    env.vars['list'] = lambda *args: list(args)
+    env.vars['أضف'] = lambda ق, عنصر: ق + [عنصر]
+    env.vars['عنصر'] = lambda ق, فهرس: ق[فهرس]
+    env.vars['مدى'] = lambda بداية, نهاية: list(range(بداية, نهاية))
 
     # أدوات
     env.vars['إنْ'] = إنْ
@@ -267,8 +265,5 @@ if __name__ == "__main__":
     env = build_default_env()
     print(f"عدد الدوال: {len(env.vars)}")
     print()
-    if FORTRAN_AVAILABLE:
-        print("FORTRAN:")
-        print(f"  جيب(0) = {جيب(0)}")
-        print(f"  مساحة_مثلث(10, 6) = {مساحة_مثلث(10, 6)}")
-        print(f"  متوسط(90, 80) = {متوسط(90, 80)}")
+    print(f"FORTRAN: {'✅' if FORTRAN_AVAILABLE else '❌'}")
+    print(f"BASIC:   {'✅' if BASIC_AVAILABLE else '❌'}")
