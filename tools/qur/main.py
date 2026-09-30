@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 
 from . import __version__
-from .commands import pkg, fmt, build, doc, test, pack, install
+from .commands import pkg, fmt, build, doc, test, pack, install, publish, update
 
 
 BANNER = """
@@ -128,6 +128,14 @@ def cmd_install(args):
     return install.run(args)
 
 
+def cmd_publish(args):
+    return publish.run(args)
+
+
+def cmd_update(args):
+    return update.run(args)
+
+
 def cmd_list(args):
     print(BANNER)
     print("🛠️  الأوامر المتاحة:")
@@ -143,6 +151,8 @@ def cmd_list(args):
     print("  qur test [dir]             تشغيل الاختبارات")
     print("  qur pack [dir]             تغليف المشروع")
     print("  qur install <file.qur>     تثبيت حزمة")
+    print("  qur publish <file.qur>     نشر حزمة")
+    print("  qur update                 تحديث الحزم")
     print("  qur list                   عرض الأوامر")
     print("  qur version                عرض الإصدار")
     print("  qur help                   المساعدة")
@@ -177,6 +187,8 @@ def cmd_help(args):
     'test': cmd_test,
     'pack': cmd_pack,
     'install': cmd_install,
+    'publish': cmd_publish,
+    'update': cmd_update,
     'list': cmd_list,
     'version': cmd_version,
     'help': cmd_help,
