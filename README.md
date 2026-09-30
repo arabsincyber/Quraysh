@@ -1,5 +1,9 @@
 # 🕋 Quraysh — لسان قريش
 
+[![Release](https://img.shields.io/badge/release-v3.0.0-blue)](//github.com/arabsincyber/Quraysh/releases)
+[![License](https://img.shields.io/badge/License-MIT-green)](//github.com/arabsincyber/Quraysh/blob/main/LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.8+-yellow)](//python.org)
+
 > **لغة برمجة عربية كاملة — مبنية على مبادئ Lisp (1958).**
 
 ---
