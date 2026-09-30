@@ -7,6 +7,7 @@ from pathlib import Path
 
 from . import __version__
 from .commands import pkg, fmt, build, doc, test, pack, install, publish, update
+from .commands import scan
 
 
 BANNER = """
@@ -89,11 +90,9 @@ def cmd_check(args):
         from quraysh.lexer import tokenize
         from quraysh.parser import parse_all
         نص = ملف.read_text(encoding="utf-8")
-        رموز = tokenize(نص)
-        تعبيرات = parse_all(نص)
         print(f"✅ الفحص نجح: {ملف}")
-        print(f"   الرموز: {len(رموز)}")
-        print(f"   التعبيرات: {len(تعبيرات)}")
+        print(f"   الرموز: {len(tokenize(نص))}")
+        print(f"   التعبيرات: {len(parse_all(نص))}")
         return 0
     except Exception as e:
         print(f"❌ فشل الفحص: {e}")
@@ -136,6 +135,10 @@ def cmd_update(args):
     return update.run(args)
 
 
+def cmd_scan(args):
+    return scan.run(args)
+
+
 def cmd_list(args):
     print(BANNER)
     print("🛠️  الأوامر المتاحة:")
@@ -153,6 +156,7 @@ def cmd_list(args):
     print("  qur install <file.qur>     تثبيت حزمة")
     print("  qur publish <file.qur>     نشر حزمة")
     print("  qur update                 تحديث الحزم")
+    print("  qur scan <target>          فحص أخلاقي (⚠️  تحذير)")
     print("  qur list                   عرض الأوامر")
     print("  qur version                عرض الإصدار")
     print("  qur help                   المساعدة")
@@ -162,15 +166,11 @@ def cmd_list(args):
 
 def cmd_version(args):
     print(f"qur — الإصدار {__version__}")
-    print("لسان قريش — مركز الأدوات")
     return 0
 
 
 def cmd_help(args):
     print(BANNER)
-    print("الاستخدام:")
-    print("  qur <أمر> [خيارات]")
-    print()
     cmd_list([])
     return 0
 
@@ -189,6 +189,7 @@ def cmd_help(args):
     'install': cmd_install,
     'publish': cmd_publish,
     'update': cmd_update,
+    'scan': cmd_scan,
     'list': cmd_list,
     'version': cmd_version,
     'help': cmd_help,
