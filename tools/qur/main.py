@@ -6,10 +6,10 @@ qur — نقطة الدخول
 """
 
 import sys
-import os
 from pathlib import Path
 
 from . import __version__
+from .commands import pkg, fmt
 
 
 BANNER = """
@@ -59,9 +59,8 @@ def cmd_new(args):
 
 
 def cmd_init(args):
-    """تهيئة مشروع في المجلد الحالي"""
+    """تهيئة مشروع"""
     مسار = Path.cwd()
-
     (مسار / "src").mkdir(exist_ok=True)
     (مسار / "tests").mkdir(exist_ok=True)
     (مسار / "examples").mkdir(exist_ok=True)
@@ -87,15 +86,14 @@ def cmd_run(args):
         print(f"❌ الملف غير موجود: {ملف}")
         return 1
 
-    # استدعاء المفسر
     try:
-        # إضافة مسار src إلى sys.path
-        src_path = Path(__file__).parent.parent.parent.parent / "src"
+        src_path = Path(__file__).parent.parent.parent / "src"
         if src_path.exists():
             sys.path.insert(0, str(src_path))
 
         from quraysh.repl import run_file
-        run_file(str(ملف), skip_sandbox=False)
+        skip = "--no-sandbox" in args
+        run_file(str(ملف), skip_sandbox=skip)
         return 0
     except ImportError as e:
         print(f"❌ خطأ في الاستيراد: {e}")
@@ -116,9 +114,8 @@ def cmd_check(args):
         print(f"❌ الملف غير موجود: {ملف}")
         return 1
 
-    # فحص نحوي (بسيط)
     try:
-        src_path = Path(__file__).parent.parent.parent.parent / "src"
+        src_path = Path(__file__).parent.parent.parent / "src"
         if src_path.exists():
             sys.path.insert(0, str(src_path))
 
@@ -138,18 +135,30 @@ def cmd_check(args):
         return 1
 
 
+def cmd_pkg(args):
+    """مدير الحزم"""
+    return pkg.run(args)
+
+
+def cmd_fmt(args):
+    """منسّق الكود"""
+    return fmt.run(args)
+
+
 def cmd_list(args):
-    """عرض الأدوات المتاحة"""
+    """عرض الأوامر"""
     print(BANNER)
     print("🛠️  الأوامر المتاحة:")
     print()
-    print("  qur new <اسم>       إنشاء مشروع جديد")
-    print("  qur init            تهيئة مشروع")
-    print("  qur run <file>      تشغيل ملف")
-    print("  qur check <file>    فحص ملف")
-    print("  qur list            عرض الأوامر")
-    print("  qur version         عرض الإصدار")
-    print("  qur help            المساعدة")
+    print("  qur new <اسم>              إنشاء مشروع جديد")
+    print("  qur init                   تهيئة مشروع")
+    print("  qur run <file>             تشغيل ملف")
+    print("  qur check <file>           فحص ملف")
+    print("  qur pkg <أمر>              مدير الحزم")
+    print("  qur fmt <أمر>              منسّق الكود")
+    print("  qur list                   عرض الأوامر")
+    print("  qur version                عرض الإصدار")
+    print("  qur help                   المساعدة")
     print()
     return 0
 
@@ -180,6 +189,8 @@ def cmd_help(args):
     'init': cmd_init,
     'run': cmd_run,
     'check': cmd_check,
+    'pkg': cmd_pkg,
+    'fmt': cmd_fmt,
     'list': cmd_list,
     'version': cmd_version,
     'help': cmd_help,
@@ -190,13 +201,11 @@ def main():
     """نقطة الدخول الرئيسية"""
     args = sys.argv[1:]
 
-    # بدون أوامر
     if not args:
         print(BANNER)
         cmd_list([])
         return 0
 
-    # خيارات خاصة
     if args[0] in ('--version', '-v'):
         return cmd_version([])
 
@@ -206,7 +215,6 @@ def main():
     if args[0] in ('--list', '-l'):
         return cmd_list([])
 
-    # الأوامر
     أمر = args[0]
     if أمر not in الأوامر:
         print(f"❌ أمر غير معروف: {أمر}")
