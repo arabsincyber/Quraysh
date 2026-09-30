@@ -11,12 +11,13 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/arabsincyber/Quraysh",
-    packages=find_packages(where="src"),
-    package_dir={"": "src"},
+    packages=find_packages(where="src") + ["qur"],
+    package_dir={"": "src", "qur": "tools/qur"},
     python_requires=">=3.8",
     entry_points={
         "console_scripts": [
             "quraysh=quraysh.repl:main",
+            "qur=qur.main:main",
         ],
     },
     classifiers=[
