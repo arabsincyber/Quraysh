@@ -5,7 +5,7 @@ Quraysh — لسان قريش
 لغة برمجة عربية كاملة، مبنية على مبادئ Lisp (1958).
 """
 
-__version__ = "2.0.0"
+__version__ = "3.0.0"
 __author__ = "Mohammed"
 __license__ = "MIT"
 
