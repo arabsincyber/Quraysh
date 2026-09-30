@@ -258,7 +258,19 @@ def build_default_env() -> Environment:
     env.vars['أجل'] = True
     env.vars['كلا'] = False
 
+
+    # ═══ Networks ═══
+    if NETWORKS_AVAILABLE:
+        env.vars['اتصل_بـ'] = اتصل_بـ
+        env.vars['أرسل_بيانات'] = أرسل_بيانات
+        env.vars['حمّل'] = حمّل
+        env.vars['بينغ'] = بينغ
+        env.vars['استعلم_dns'] = استعلم_dns
+        env.vars['افتح_منفذ'] = افتح_منفذ
+        env.vars['ip_الحالي'] = ip_الحالي
+
     return env
+
 
 
 if __name__ == "__main__":
@@ -267,3 +279,16 @@ if __name__ == "__main__":
     print()
     print(f"FORTRAN: {'✅' if FORTRAN_AVAILABLE else '❌'}")
     print(f"BASIC:   {'✅' if BASIC_AVAILABLE else '❌'}")
+
+# ═══════════════════════════════════════════════════════════
+#  Networks — إضافة جديدة
+# ═══════════════════════════════════════════════════════════
+
+try:
+    from .networks import (
+        اتصل_بـ, أرسل_بيانات, حمّل, بينغ,
+        استعلم_dns, افتح_منفذ, ip_الحالي,
+    )
+    NETWORKS_AVAILABLE = True
+except ImportError:
+    NETWORKS_AVAILABLE = False
