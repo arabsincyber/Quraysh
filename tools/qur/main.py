@@ -1,13 +1,12 @@
 """
 qur — نقطة الدخول
-==================
 """
 
 import sys
 from pathlib import Path
 
 from . import __version__
-from .commands import pkg, fmt, build, doc
+from .commands import pkg, fmt, build, doc, test
 
 
 BANNER = """
@@ -117,6 +116,10 @@ def cmd_doc(args):
     return doc.run(args)
 
 
+def cmd_test(args):
+    return test.run(args)
+
+
 def cmd_list(args):
     print(BANNER)
     print("🛠️  الأوامر المتاحة:")
@@ -129,6 +132,7 @@ def cmd_list(args):
     print("  qur fmt <أمر>              منسّق الكود")
     print("  qur build [--check]        بناء المشروع")
     print("  qur doc <file|--all>       توليد الوثائق")
+    print("  qur test [dir]             تشغيل الاختبارات")
     print("  qur list                   عرض الأوامر")
     print("  qur version                عرض الإصدار")
     print("  qur help                   المساعدة")
@@ -160,6 +164,7 @@ def cmd_help(args):
     'fmt': cmd_fmt,
     'build': cmd_build,
     'doc': cmd_doc,
+    'test': cmd_test,
     'list': cmd_list,
     'version': cmd_version,
     'help': cmd_help,
