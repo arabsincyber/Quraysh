@@ -12,3 +12,5 @@ venv/
 .DS_Store
 Thumbs.db
 *.bak
+models/corpus/*/
+models/corpus/bigram/*.json
