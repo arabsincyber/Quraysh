@@ -17,6 +17,8 @@ from .lexer import tokenize
 from .parser import parse_all, Expression
 from .environment import build_default_env, Environment
 from .crypto import دوال_التشفير
+from .sql import دوال_القاعدة
+from .networks import دوال_الشبكة
 
 
 # ============================================================
@@ -86,6 +88,8 @@ class Quraysh:
         self.env = env or build_default_env()
         # دمج دوال التشفير في البيئة
         self.env.update(دوال_التشفير) if hasattr(self.env, 'update') else [self.env.set(k, v) for k, v in دوال_التشفير.items()]
+        self.env.update(دوال_الشبكة) if hasattr(self.env, 'update') else [self.env.set(k, v) for k, v in دوال_الشبكة.items()]
+        self.env.update(دوال_القاعدة) if hasattr(self.env, 'update') else [self.env.set(k, v) for k, v in دوال_القاعدة.items()]
 
     def eval(self, expr: Expression, env: Environment = None):
         """يقيّم تعبير واحد."""
