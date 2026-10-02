@@ -16,6 +16,7 @@ Evaluator — المُقيِّم
 from .lexer import tokenize
 from .parser import parse_all, Expression
 from .environment import build_default_env, Environment
+from .crypto import دوال_التشفير
 
 
 # ============================================================
@@ -83,6 +84,8 @@ class Quraysh:
 
     def __init__(self, env: Environment = None):
         self.env = env or build_default_env()
+        # دمج دوال التشفير في البيئة
+        self.env.update(دوال_التشفير) if hasattr(self.env, 'update') else [self.env.set(k, v) for k, v in دوال_التشفير.items()]
 
     def eval(self, expr: Expression, env: Environment = None):
         """يقيّم تعبير واحد."""
