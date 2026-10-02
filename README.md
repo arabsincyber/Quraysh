@@ -1,5 +1,8 @@
 # 🕋 Quraysh — لسان قريش
 
+[![🧪 الاختبارات](https://github.com/arabsincyber/Quraysh/actions/workflows/tests.yml/badge.svg)](https://github.com/arabsincyber/Quraysh/actions/workflows/tests.yml)
+
+
 [![Release](https://img.shields.io/badge/release-v3.0.0-blue)](//github.com/arabsincyber/Quraysh/releases)
 [![License](https://img.shields.io/badge/License-MIT-green)](//github.com/arabsincyber/Quraysh/blob/main/LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.8+-yellow)](//python.org)
