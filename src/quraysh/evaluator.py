@@ -18,6 +18,9 @@ from .parser import parse_all, Expression
 from .environment import build_default_env, Environment
 from .crypto import دوال_التشفير
 from .files import دوال_الملفات
+from .cobol import دوال_COBOL
+from .fortran import دوال_FORTRAN
+from .basic import دوال_BASIC
 from .sql import دوال_القاعدة
 from .networks import دوال_الشبكة
 
@@ -92,6 +95,9 @@ class Quraysh:
         self.env.update(دوال_الشبكة) if hasattr(self.env, 'update') else [self.env.set(k, v) for k, v in دوال_الشبكة.items()]
         self.env.update(دوال_القاعدة) if hasattr(self.env, 'update') else [self.env.set(k, v) for k, v in دوال_القاعدة.items()]
         self.env.update(دوال_الملفات) if hasattr(self.env, 'update') else [self.env.set(k, v) for k, v in دوال_الملفات.items()]
+        self.env.update(دوال_BASIC) if hasattr(self.env, 'update') else [self.env.set(k, v) for k, v in دوال_BASIC.items()]
+        self.env.update(دوال_FORTRAN) if hasattr(self.env, 'update') else [self.env.set(k, v) for k, v in دوال_FORTRAN.items()]
+        self.env.update(دوال_COBOL) if hasattr(self.env, 'update') else [self.env.set(k, v) for k, v in دوال_COBOL.items()]
 
     def eval(self, expr: Expression, env: Environment = None):
         """يقيّم تعبير واحد."""
