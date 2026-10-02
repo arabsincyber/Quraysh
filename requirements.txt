@@ -1,3 +1,4 @@
 # Quraysh v2.0 — Python 3.8+
 # لا يحتاج مكتبات خارجية
 pycryptodome>=3.23.0
+pycryptodome>=3.23.0
