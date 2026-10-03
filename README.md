@@ -242,7 +242,7 @@
 | test_tutor.py | 21 |
 | test_bigram.py | 19 |
 | test_repl.py | 21 |
-| المجموع | 132 |
+| المجموع | 164 |
 
 ---
 
