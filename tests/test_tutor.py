@@ -128,6 +128,66 @@ def test_تقرير_نصي(مساعد):
 # ═══ السجل ═══
 
 def test_دوال_المساعد_مسجلة():
-    assert len(دوال_المساعد) == 3
+    assert len(دوال_المساعد) == 4
     for دالة in دوال_المساعد.values():
         assert callable(دالة)
+
+
+# ═══ مساعد_دمج ═══
+
+def test_مساعد_دمج_ينشأ():
+    from quraysh.tutor import مساعد_دمج
+    م = مساعد_دمج()
+    assert م.tutor is not None
+    assert م.بيغرام is not None
+    assert م.سجل_الأخطاء == {}
+
+
+def test_دمج_تصحيح_أساسي():
+    from quraysh.tutor import مساعد_دمج
+    م = مساعد_دمج()
+    نتيجة = م.حلّل_خطأ_شامل('NameError: بصمه_نص', '(بصمه_نص قريش)')
+    assert len(نتيجة["اقتراحات"]) > 0
+    assert نتيجة["اقتراحات"][0]["البديل"] == "بصمة_نص"
+
+
+def test_دمج_شرح_مدمج():
+    from quraysh.tutor import مساعد_دمج
+    م = مساعد_دمج()
+    نتيجة = م.حلّل_خطأ_شامل('NameError: بصمه_نص', '(بصمه_نص قريش)')
+    assert "شرح" in نتيجة
+    assert نتيجة["شرح"]["الدالة"] == "بصمة_نص"
+
+
+def test_دمج_تعلّم_من_تكرار():
+    from quraysh.tutor import مساعد_دمج
+    م = مساعد_دمج()
+    for _ in range(4):
+        م.حلّل_خطأ_شامل('NameError: بصمه_نص', '(بصمه_نص قريش)')
+    نتيجة = م.حلّل_خطأ_شامل('NameError: بصمه_نص', '(بصمه_نص قريش)')
+    assert "تنبيه_متكرر" in نتيجة
+    assert نتيجة["تنبيه_متكرر"]["العدد"] >= 5
+
+
+def test_دمج_delegation_اشرح():
+    from quraysh.tutor import مساعد_دمج
+    م = مساعد_دمج()
+    نتيجة = م.اشرح_دالة("بصمة_نص")
+    assert نتيجة is not None
+    assert نتيجة["الدالة"] == "بصمة_نص"
+
+
+def test_دمج_delegation_اقترح():
+    from quraysh.tutor import مساعد_دمج
+    م = مساعد_دمج()
+    نتيجة = م.اقترح_مثال("تشفير")
+    assert len(نتيجة) > 0
+
+
+def test_دمج_تقرير_شامل():
+    from quraysh.tutor import مساعد_دمج
+    م = مساعد_دمج()
+    نتيجة = م.حلّل_خطأ_شامل('NameError: بصمه_نص', '(بصمه_نص قريش)')
+    تقرير = م.اكتب_تقرير_شامل(نتيجة)
+    assert isinstance(تقرير, str)
+    assert "بصمة_نص" in تقرير
