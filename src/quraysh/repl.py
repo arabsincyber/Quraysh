@@ -15,7 +15,7 @@ from pathlib import Path
 from .evaluator import Quraysh
 from .security import parse_contract, SecurityViolation
 from .sandbox import Sandbox, عرض_المحاكاة
-from .tutor import مساعد_لسان_قريش
+from .tutor import مساعد_لسان_قريش, مساعد_دمج
 
 
 BANNER = """
@@ -138,7 +138,7 @@ def _تعامل_مع_أمر(line, مساعد, سجل_الكود):
 def main():
     """نقطة الدخول — المفسر التفاعلي."""
     q = Quraysh()
-    مساعد = مساعد_لسان_قريش()
+    مساعد = مساعد_دمج()
     سجل_الكود = []  # آخر الأكواد المُدخلة
 
     print(BANNER)
@@ -171,17 +171,12 @@ def main():
                 رسالة = str(e)
                 print(f"❌ خطأ: {رسالة}")
 
-                # اقتراح تلقائي
-                اقتراح = مساعد.حلّل_خطأ(رسالة, line)
-                if اقتراح["اقتراحات"]:
+                # اقتراح ذكي متعدد المستويات
+                نتائج = مساعد.حلّل_خطأ_شامل(رسالة, line)
+                if نتائج.get("اقتراحات") or نتائج.get("توقعات"):
                     print()
-                    print("🎓 اقتراحات المساعد:")
-                    for ق in اقتراح["اقتراحات"][:3]:
-                        if ق.get("نوع") == "دالة":
-                            print(f"   '{ق['الأصل']}' → '{ق['البديل']}'  ({ق['الثقة']}%)")
-                            print(f"      {ق['الشرح']}")
-                        else:
-                            print(f"   {ق.get('رسالة', '')}")
+                    تقرير = مساعد.اكتب_تقرير_شامل(نتائج)
+                    print(tقرير)
 
         except (KeyboardInterrupt, EOFError):
             print()
