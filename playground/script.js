@@ -110,7 +110,7 @@ async function initialize() {
         const ملفات = [
             "lexer", "parser", "environment", "evaluator",
             "crypto", "networks", "sql", "files",
-            "basic", "fortran", "cobol", "bigram", "tutor", "habs8", "habs_8_vocab"
+            "basic", "fortran", "cobol", "bigram", "tutor", "habs8"
         ];
 
         try { pyodide.FS.mkdir("/tmp/quraysh"); } catch(e) {}
@@ -136,6 +136,19 @@ async function initialize() {
             }
         }
 
+        // حمّل vocab JSON منفصلاً
+        try {
+            const vocabUrl = "https://raw.githubusercontent.com/arabsincyber/Quraysh/main/src/quraysh/habs_8_vocab.json";
+            const vocabResp = await fetch(vocabUrl);
+            if (vocabResp.ok) {
+                const vocabText = await vocabResp.text();
+                pyodide.FS.writeFile("/tmp/quraysh/habs_8_vocab.json", vocabText);
+                console.log("✅ vocab JSON محمّل");
+            }
+        } catch (e) {
+            console.warn("⚠️ vocab JSON:", e);
+        }
+        
         pyodide.runPython(`
 import sys
 sys.path.insert(0, "/tmp")
