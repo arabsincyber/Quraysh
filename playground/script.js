@@ -24,7 +24,12 @@ const الأمثلة = {
     sql: `; قاعدة بيانات 🗄️
 (أنشئ_جدول "طلاب" (قائمة "اسم" "عمر"))
 (أدرج "طلاب" "اسم" "محمد" "عمر" 25)
-(اعرض "طلاب")`
+(اعرض "طلاب")`,
+
+    ai: `; HBS-8 — Transformer عربي 🤖
+; يكتب نص عربي من القرآن
+(توليد_نص "بسم الله" 10)
+(توليد_نص "الحمد لله" 10)`
 };
 
 window.updateStatus = function updateStatus(text, نوع = "info") {
@@ -105,7 +110,7 @@ async function initialize() {
         const ملفات = [
             "lexer", "parser", "environment", "evaluator",
             "crypto", "networks", "sql", "files",
-            "basic", "fortran", "cobol", "bigram", "tutor"
+            "basic", "fortran", "cobol", "bigram", "tutor", "habs8"
         ];
 
         try { pyodide.FS.mkdir("/tmp/quraysh"); } catch(e) {}
