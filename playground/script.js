@@ -166,6 +166,19 @@ async function initialize() {
         } catch (e) {
             console.warn("⚠️ vocab-9 JSON:", e);
         }
+
+        // حمّل trained HBS-9
+        try {
+            const trainedUrl9 = "https://raw.githubusercontent.com/arabsincyber/Quraysh/main/src/quraysh/habs_9_trained.json";
+            const trainedResp9 = await fetch(trainedUrl9);
+            if (trainedResp9.ok) {
+                const trainedText9 = await trainedResp9.text();
+                pyodide.FS.writeFile("/tmp/quraysh/habs_9_trained.json", trainedText9);
+                console.log("✅ trained-9 JSON محمّل");
+            }
+        } catch (e) {
+            console.warn("⚠️ trained-9:", e);
+        }
         
         pyodide.runPython(`
 import sys
