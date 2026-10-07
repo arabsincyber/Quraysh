@@ -16,6 +16,13 @@ Evaluator — المُقيِّم
 
 
 # محاولة استيراد نسبي (محلي) أو مطلق (Pyodide)
+import sys as _sys
+import os as _os
+# أضف مسار الملف الحالي
+_this_dir = _os.path.dirname(_os.path.abspath(__file__))
+if _this_dir not in _sys.path:
+    _sys.path.insert(0, _this_dir)
+
 try:
     from .lexer import tokenize
     from .parser import parse_all, Expression

@@ -246,7 +246,7 @@ async function initialize() {
         
         pyodide.runPython(`
 import sys
-sys.path.insert(0, "/tmp")
+sys.path.insert(0, "/tmp/quraysh")
         `);
 
         // انتظر شوي — تأكد تحميل كل الملفات
