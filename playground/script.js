@@ -34,7 +34,12 @@ const الأمثلة = {
     ai9: `; HBS-9 — Transformer أقوى 🚀
 ; vocab 1000 + نص أدق
 (توليد_نص_9 "بسم الله" 12)
-(توليد_نص_9 "الحمد لله" 12)`
+(توليد_نص_9 "الحمد لله" 12)`,
+
+    ai10: `; HBS-10 — Backprop حقيقي 🏆
+; أفضل جودة — تعلم فعلاً
+(توليد_نص_10 "بسم الله" 10)
+(توليد_نص_10 "الحمد لله" 10)`
 };
 
 window.updateStatus = function updateStatus(text, نوع = "info") {
@@ -115,7 +120,7 @@ async function initialize() {
         const ملفات = [
             "lexer", "parser", "environment", "evaluator",
             "crypto", "networks", "sql", "files",
-            "basic", "fortran", "cobol", "bigram", "tutor", "habs8", "habs9"
+            "basic", "fortran", "cobol", "bigram", "tutor", "habs8", "habs9", "habs10"
         ];
 
         try { pyodide.FS.mkdir("/tmp/quraysh"); } catch(e) {}
@@ -178,6 +183,32 @@ async function initialize() {
             }
         } catch (e) {
             console.warn("⚠️ trained-9:", e);
+        }
+
+        // حمّل vocab HBS-10
+        try {
+            const vocabUrl10 = "https://raw.githubusercontent.com/arabsincyber/Quraysh/main/src/quraysh/habs_10_vocab.json";
+            const vocabResp10 = await fetch(vocabUrl10);
+            if (vocabResp10.ok) {
+                const vocabText10 = await vocabResp10.text();
+                pyodide.FS.writeFile("/tmp/quraysh/habs_10_vocab.json", vocabText10);
+                console.log("✅ vocab-10 JSON محمّل");
+            }
+        } catch (e) {
+            console.warn("⚠️ vocab-10:", e);
+        }
+
+        // حمّل trained HBS-10
+        try {
+            const trainedUrl10 = "https://raw.githubusercontent.com/arabsincyber/Quraysh/main/src/quraysh/habs_10_trained.json";
+            const trainedResp10 = await fetch(trainedUrl10);
+            if (trainedResp10.ok) {
+                const trainedText10 = await trainedResp10.text();
+                pyodide.FS.writeFile("/tmp/quraysh/habs_10_trained.json", trainedText10);
+                console.log("✅ trained-10 JSON محمّل");
+            }
+        } catch (e) {
+            console.warn("⚠️ trained-10:", e);
         }
         
         pyodide.runPython(`
