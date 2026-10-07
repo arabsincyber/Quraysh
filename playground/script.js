@@ -96,7 +96,7 @@ async function initialize() {
         updateStatus("⏳ جاري تحميل Python (Pyodide)...", "info");
 
         pyodide = await loadPyodide({
-            indexURL: "https://cdn.jsdelivr.net/pyodide/stable/full/"
+            indexURL: "https://cdn.pyodide.org/v0.27.7/full/"
         });
 
         updateStatus("⏳ تحميل quraysh...", "info");
