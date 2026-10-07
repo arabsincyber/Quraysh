@@ -622,3 +622,85 @@ if __name__ == "__main__":
 
     نموذج.حفظ("habs_11_trained.json")
     print("💾 حُفظ: habs_11_trained.json")
+
+
+# ═══════════════════════════════════════════════════════════
+#  دوال الربط
+# ═══════════════════════════════════════════════════════════
+
+_نموذج_hbs11 = None
+_vocab_hbs11 = None
+
+
+def _احصل_على_نموذج_11():
+    global _نموذج_hbs11
+    if _نموذج_hbs11 is None:
+        try:
+            from pathlib import Path
+            import json
+            مسارات = [
+                Path(__file__).parent / "habs_11_trained.json",
+                Path("/tmp/quraysh/habs_11_trained.json"),
+            ]
+            for مسار in مسارات:
+                if مسار.exists():
+                    with open(مسار, "r", encoding="utf-8") as f:
+                        data = json.load(f)
+                    _نموذج_hbs11 = Habs11(
+                        vocab_size=data.get("vocab_size", 500),
+                        d_model=data.get("d_model", 32),
+                        num_layers=data.get("num_layers", 2),
+                        seq_len=data.get("seq_len", 2),
+                    )
+                    if "embedding" in data:
+                        _نموذج_hbs11.embedding = data["embedding"]
+                    if "W_out" in data:
+                        _نموذج_hbs11.W_out = data["W_out"]
+                    return _نموذج_hbs11
+            _نموذج_hbs11 = Habs11(vocab_size=100)
+        except Exception as e:
+            print(f"⚠️ HBS-11: {e}")
+            _نموذج_hbs11 = Habs11(vocab_size=100)
+    return _نموذج_hbs11
+
+
+def _احصل_على_vocab_11():
+    global _vocab_hbs11
+    if _vocab_hbs11 is None or len(_vocab_hbs11) <= 2:
+        try:
+            from pathlib import Path
+            import json
+            مسارات = [
+                Path(__file__).parent / "habs_11_vocab.json",
+                Path("/tmp/quraysh/habs_11_vocab.json"),
+            ]
+            for مسار in مسارات:
+                if مسار.exists():
+                    with open(مسار, "r", encoding="utf-8") as f:
+                        data = json.load(f)
+                    if len(data) > 2:
+                        _vocab_hbs11 = data
+                        return _vocab_hbs11
+            if _vocab_hbs11 is None:
+                _vocab_hbs11 = {"<PAD>": 0, "<UNK>": 1}
+        except Exception as e:
+            print(f"⚠️ vocab-11: {e}")
+            if _vocab_hbs11 is None:
+                _vocab_hbs11 = {"<PAD>": 0, "<UNK>": 1}
+    return _vocab_hbs11
+
+
+def توليد_نص_11(بذرة="بسم الله", طول=10):
+    نموذج = _احصل_على_نموذج_11()
+    vocab = _احصل_على_vocab_11()
+    if نموذج is None or vocab is None:
+        return "⚠️ HBS-11 غير متاح"
+    seed_ids = [vocab.get(ك, 1) for ك in بذرة.split()]
+    generated = نموذج.generate(seed_ids, length=طول, temperature=0.7)
+    id_to_word = {v: k for k, v in vocab.items()}
+    return " ".join(id_to_word.get(i, "?") for i in generated)
+
+
+دوال_HBS11 = {
+    "توليد_نص_11": توليد_نص_11,
+}
