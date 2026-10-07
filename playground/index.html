@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🕋 لسان قريش — الملعب التفاعلي</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🕋 لسان قريش</h1>
+            <p class="tagline">لغة برمجة عربية كاملة — <span class="highlight">"الوضوح = أمان"</span></p>
+            <div class="links">
+                <a href="https://github.com/arabsincyber/Quraysh" target="_blank">📦 GitHub</a>
+                <a href="https://github.com/arabsincyber/Quraysh/blob/main/MANIFESTO.md" target="_blank">📜 المانيفستو</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="info-banner" id="status">
+            <span class="icon">⏳</span>
+            <span id="status-text">جاري تحميل Python والمفسّر...</span>
+        </section>
+
+        <section class="editor-section">
+            <div class="editor-header">
+                <span>📝 اكتب كودك هنا</span>
+                <div class="examples">
+                    <button onclick="loadExample('welcome')">مرحبا</button>
+                    <button onclick="loadExample('calc')">حاسبة</button>
+                    <button onclick="loadExample('crypto')">تشفير</button>
+                    <button onclick="loadExample('sql')">قاعدة بيانات</button>
+                </div>
+            </div>
+            <textarea id="code" spellcheck="false">; مرحبا بك في لسان قريش 🕋
+(اطبع "السلام عليكم")
+(تعريف مربع (لامدا (ن) (* ن ن)))
+(اطبع (مربع 5))</textarea>
+            <div class="actions">
+                <button id="run" onclick="runCode()" disabled>▶️ تشغيل</button>
+                <button onclick="clearOutput()" class="secondary">🗑️ مسح</button>
+            </div>
+        </section>
+
+        <section class="output-section">
+            <div class="output-header">💻 النتيجة</div>
+            <pre id="output">في انتظار تشغيل الكود...</pre>
+        </section>
+
+        <section class="cheatsheet">
+            <h2>📚 مرجع سريع</h2>
+            <div class="cheatsheet-grid">
+                <div class="cheat-card">
+                    <h3>🔐 تشفير</h3>
+                    <code>(بصمة_نص "نص")</code>
+                    <code>(ترميز_base64 "نص")</code>
+                    <code>(تشفير_xor "نص" "مفتاح")</code>
+                </div>
+                <div class="cheat-card">
+                    <h3>🌐 شبكة</h3>
+                    <code>(استعلم_dns "google.com")</code>
+                    <code>(افتح_منفذ "google.com" 443)</code>
+                </div>
+                <div class="cheat-card">
+                    <h3>🗄️ SQL</h3>
+                    <code>(أنشئ_جدول "طلاب" (قائمة "اسم"))</code>
+                    <code>(أدرج "طلاب" "اسم" "محمد")</code>
+                    <code>(اعرض "طلاب")</code>
+                </div>
+                <div class="cheat-card">
+                    <h3>📁 ملفات</h3>
+                    <code>(اقرأ "ملف.txt")</code>
+                    <code>(اكتب "ملف.txt" "نص")</code>
+                </div>
+                <div class="cheat-card">
+                    <h3>🔬 رياضيات</h3>
+                    <code>(جذر_ن 16)</code>
+                    <code>(مساحة_مثلث 10 6)</code>
+                </div>
+                <div class="cheat-card">
+                    <h3>🧠 المساعد</h3>
+                    <code>(اشرح "بصمة_نص")</code>
+                    <code>(صحّح_كلمة "الرحم")</code>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>🕋 لسان قريش — صُنع بـ 💙 في العالم العربي</p>
+        <p class="small">"نحن لا نطلب من العالم أن يتعلم العربية — نطلب من العربية أن تستحق نفسها."</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
