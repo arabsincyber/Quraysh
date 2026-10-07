@@ -329,18 +329,41 @@ def _احصل_على_النموذج():
 
 
 def _احصل_على_vocab():
+    """يحمّل vocab — يعيد المحاولة لو فشل"""
     global _vocab_hbs9
-    if _vocab_hbs9 is None:
-        try:
-            مسار = Path(__file__).parent / "habs_9_vocab.json"
+
+    # إذا عندنا vocab حقيقي (أكثر من 2 مفردات) → استخدم
+    if _vocab_hbs9 is not None and len(_vocab_hbs9) > 2:
+        return _vocab_hbs9
+
+    # حاول تحميل
+    try:
+        from pathlib import Path
+        import json
+
+        مسارات = [
+            Path(__file__).parent / "habs_9_vocab.json",
+            Path("/tmp/quraysh/habs_9_vocab.json"),
+            Path("/tmp/habs_9_vocab.json"),
+        ]
+
+        for مسار in مسارات:
             if مسار.exists():
                 with open(مسار, "r", encoding="utf-8") as f:
-                    _vocab_hbs9 = json.load(f)
-            else:
-                _vocab_hbs9 = {"<PAD>": 0, "<UNK>": 1}
-        except Exception as e:
-            print(f"⚠️ vocab HBS-9: {e}")
+                    data = json.load(f)
+                if len(data) > 2:
+                    _vocab_hbs9 = data
+                    print(f"✅ vocab-9 محمّل: {len(data)} كلمة")
+                    return _vocab_hbs9
+
+        # fallback
+        if _vocab_hbs9 is None:
             _vocab_hbs9 = {"<PAD>": 0, "<UNK>": 1}
+    except Exception as e:
+        print(f"⚠️ vocab-9: {e}")
+        if _vocab_hbs9 is None:
+            _vocab_hbs9 = {"<PAD>": 0, "<UNK>": 1}
+
     return _vocab_hbs9
 
 
