@@ -1,8 +1,10 @@
 // 🕋 لسان قريش — الملعب التفاعلي
+// =====================================
 
 let pyodide = null;
 let isReady = false;
 
+// الأمثلة الجاهزة
 const الأمثلة = {
     welcome: `; مرحبا بك في لسان قريش 🕋
 (اطبع "السلام عليكم")
@@ -29,10 +31,8 @@ const الأمثلة = {
 function updateStatus(text, نوع = "info") {
     const status = document.getElementById("status");
     const statusText = document.getElementById("status-text");
-    if (status && statusText) {
-        statusText.textContent = text;
-        status.className = "info-banner " + نوع;
-    }
+    statusText.textContent = text;
+    status.className = "info-banner " + نوع;
 }
 
 function loadExample(اسم) {
@@ -54,8 +54,8 @@ async function runCode() {
     output.textContent = "⏳ جاري التشغيل...\n";
 
     try {
-        // ضع الكود كـ global في Pyodide
-        pyodide.globals.set("_user_code", code);
+        // ضع الكود في ملف مؤقت
+        pyodide.FS.writeFile("/home/pyodide/_user_code.txt", code);
 
         const نتيجة = await pyodide.runPythonAsync(`
 import sys
@@ -68,7 +68,9 @@ try:
     from quraysh.evaluator import Quraysh
     q = Quraysh()
 
-    code = _user_code
+    with open("/home/pyodide/_user_code.txt", "r", encoding="utf-8") as f:
+        code = f.read()
+
     for line in code.split("\\n"):
         line = line.strip()
         if not line or line.startswith(";"):
@@ -88,8 +90,10 @@ _result
         `);
 
         output.textContent = نتيجة || "(لا نتيجة)";
+        output.className = "success";
     } catch (error) {
         output.textContent = "❌ خطأ: " + error.message;
+        output.className = "error";
     }
 }
 
@@ -101,26 +105,21 @@ async function initialize() {
             indexURL: "https://cdn.jsdelivr.net/pyodide/v0.26.2/full/"
         });
 
-        updateStatus("⏳ تحميل Pyodide ناجح، جاري تحميل quraysh...", "info");
+        updateStatus("⏳ جاري تحميل لسان قريش (13 ملف)...", "info");
 
-        // اكتب الملفات بدون mkdir
+        // أنشئ مجلد quraysh في Pyodide FS
+        pyodide.runPython(`
+import os
+os.makedirs("/home/pyodide/quraysh", exist_ok=True)
+import sys
+sys.path.insert(0, "/home/pyodide")
+        `);
+
         const ملفات = [
             "lexer", "parser", "environment", "evaluator",
             "crypto", "networks", "sql", "files",
             "basic", "fortran", "cobol", "bigram", "tutor"
         ];
-
-        // اختبر: هل FS.writeFile متاح؟
-        try {
-            pyodide.FS.writeFile("/tmp/test.txt", "test");
-            updateStatus("✅ FS.writeFile متاح", "info");
-        } catch (e) {
-            updateStatus("❌ FS غير متاح: " + e.message, "error");
-            return;
-        }
-
-        // اكتب __init__.py
-        pyodide.FS.writeFile("/tmp/__init__.py", "");
 
         let نجح = 0;
         let فشل = [];
@@ -134,37 +133,38 @@ async function initialize() {
                     continue;
                 }
                 const كود = await response.text();
-                pyodide.FS.writeFile(`/tmp/${ملف}.py`, كود);
+                // اكتب الملف في نظام Pyodide
+                pyodide.FS.writeFile(`/home/pyodide/quraysh/${ملف}.py`, كود);
                 نجح++;
                 updateStatus(`⏳ تحميل quraysh... (${نجح}/${ملفات.length})`, "info");
             } catch (e) {
-                فشل.push(ملف);
                 console.warn(`خطأ في ${ملف}:`, e.message);
+                فشل.push(ملف);
             }
         }
 
-        // ضع /tmp في sys.path
-        pyodide.runPython(`
-import sys
-sys.path.insert(0, "/tmp")
-        `);
+        if (فشل.length > 0) {
+            updateStatus(`⚠️ تحمّل ${نجح}/${ملفات.length} — فشل: ${فشل.join(", ")}`, "error");
+        }
+
+        // أنشئ ملف __init__.py فارغ
+        pyodide.FS.writeFile("/home/pyodide/quraysh/__init__.py", "");
 
         // اختبر الاستيراد
-        try {
-            pyodide.runPython(`
+        pyodide.runPython(`
+import sys
+sys.path.insert(0, "/home/pyodide")
 from quraysh.evaluator import Quraysh
 q = Quraysh()
-r = q.eval_string('(+ 2 3)')
-            `);
-            updateStatus(`✅ جاهز! (${نجح}/${ملفات.length} ملف)`, "ready");
-            isReady = true;
-            document.getElementById("run").disabled = false;
-        } catch (e) {
-            updateStatus(`⚠️ تحمّل الملفات لكن الاستيراد فشل: ${e.message}`, "error");
-        }
+test = q.eval_string('(اطبع "اختبار")')
+        `);
+
+        updateStatus(`✅ جاهز! تحمّل ${نجح}/${ملفات.length} ملف`, "ready");
+        isReady = true;
+        document.getElementById("run").disabled = false;
     } catch (error) {
         updateStatus("❌ فشل التحميل: " + error.message, "error");
-        alert("خطأ: " + error.message);
+        console.error("ERROR:", error); console.error("STACK:", error.stack); alert("خطأ: " + error.message);
     }
 }
 
