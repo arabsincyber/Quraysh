@@ -110,7 +110,7 @@ async function initialize() {
         const ملفات = [
             "lexer", "parser", "environment", "evaluator",
             "crypto", "networks", "sql", "files",
-            "basic", "fortran", "cobol", "bigram", "tutor", "habs8"
+            "basic", "fortran", "cobol", "bigram", "tutor", "habs8", "habs_8_vocab"
         ];
 
         try { pyodide.FS.mkdir("/tmp/quraysh"); } catch(e) {}

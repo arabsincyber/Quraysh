@@ -396,11 +396,26 @@ _vocab_قرآني = None
 
 
 def _احصل_على_vocab():
-    """بناء vocab من نفس corpus التدريب"""
+    """يحمل vocab من JSON — للاستخدام في المتصفح والمحلي"""
     global _vocab_قرآني
     if _vocab_قرآني is None:
         try:
             from pathlib import Path
+            import json
+
+            # جرّب مسارات متعددة
+            مسارات = [
+                Path(__file__).parent / "habs_8_vocab.json",
+                Path(__file__).parent.parent.parent / "models/habs/habs_8_vocab.json",
+            ]
+
+            for مسار in مسارات:
+                if مسار.exists():
+                    with open(مسار, "r", encoding="utf-8") as f:
+                        _vocab_قرآني = json.load(f)
+                    return _vocab_قرآني
+
+            # fallback: بناء من corpus
             مسار = Path(__file__).parent.parent.parent / "models/corpus/quran/quran.txt"
             if مسار.exists():
                 كلمات = load_corpus(str(مسار))
