@@ -123,9 +123,11 @@ async function initialize() {
         updateStatus("⏳ تحميل quraysh...", "info");
 
         const ملفات = [
-            "lexer", "parser", "environment", "evaluator",
+            "lexer", "parser", "environment",
             "crypto", "networks", "sql", "files",
-            "basic", "fortran", "cobol", "bigram", "tutor", "habs8", "habs9", "habs10", "habs11"
+            "basic", "fortran", "cobol", "bigram", "tutor",
+            "habs8", "habs9", "habs10", "habs11",
+            "evaluator"
         ];
 
         try { pyodide.FS.mkdir("/tmp/quraysh"); } catch(e) {}
@@ -246,6 +248,20 @@ async function initialize() {
 import sys
 sys.path.insert(0, "/tmp")
         `);
+
+        // انتظر شوي — تأكد تحميل كل الملفات
+        await new Promise(r => setTimeout(r, 500));
+
+        // تحقق من وجود habs11.py
+        try {
+            const check = pyodide.runPython(`
+import os
+os.path.exists("/tmp/quraysh/habs11.py")
+            `);
+            console.log("✅ habs11.py:", check);
+        } catch (e) {
+            console.warn("⚠️ habs11 check:", e);
+        }
 
         try {
             pyodide.runPython(`
