@@ -1,4 +1,4 @@
-import { loadPyodide } from "https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.mjs";
+import { loadPyodide } from "./pyodide/pyodide.mjs";
 
 // 🕋 لسان قريش — الملعب التفاعلي
 
