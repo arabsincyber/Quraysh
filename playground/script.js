@@ -108,7 +108,8 @@ async function initialize() {
             "basic", "fortran", "cobol", "bigram", "tutor"
         ];
 
-        pyodide.FS.writeFile("/tmp/__init__.py", "");
+        try { pyodide.FS.mkdir("/tmp/quraysh"); } catch(e) {}
+        pyodide.FS.writeFile("/tmp/quraysh/__init__.py", "");
 
         let نجح = 0;
         let فشل = [];
@@ -122,7 +123,7 @@ async function initialize() {
                     continue;
                 }
                 const كود = await response.text();
-                pyodide.FS.writeFile(`/tmp/${ملف}.py`, كود);
+                pyodide.FS.writeFile(`/tmp/quraysh/${ملف}.py`, كود);
                 نجح++;
                 updateStatus(`⏳ تحميل quraysh... (${نجح}/${ملفات.length})`, "info");
             } catch (e) {
