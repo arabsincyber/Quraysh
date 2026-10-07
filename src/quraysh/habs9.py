@@ -368,8 +368,30 @@ def _احصل_على_vocab():
 
 
 def توليد_نص(بذرة="بسم الله", طول=10):
+    """يولّد نص عربي — يحمّل vocab كل مرة"""
     نموذج = _احصل_على_النموذج()
-    vocab = _احصل_على_vocab()
+
+    # حمّل vocab مباشرة — بدون global
+    from pathlib import Path
+    import json
+    vocab = None
+    مسارات = [
+        Path(__file__).parent / "habs_9_vocab.json",
+        Path("/tmp/quraysh/habs_9_vocab.json"),
+    ]
+    for مسار in مسارات:
+        if مسار.exists():
+            try:
+                with open(مسار, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                if len(data) > 2:
+                    vocab = data
+                    break
+            except:
+                pass
+
+    if vocab is None:
+        return "⚠️ vocab-9 غير محمّل"
 
     if نموذج is None:
         return "⚠️ HBS-9 غير متاح"
