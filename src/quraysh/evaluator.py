@@ -13,22 +13,44 @@ Evaluator — المُقيِّم
 - قيّم (eval) — تقييم ديناميكي
 """
 
-from .lexer import tokenize
-from .parser import parse_all, Expression
-from .environment import build_default_env, Environment
-from .crypto import دوال_التشفير
-from .files import دوال_الملفات
-from .bigram import دوال_البيغرام
-from .tutor import دوال_المساعد
-from .habs8 import دوال_HBS8
-from .habs9 import دوال_HBS9
-from .habs10 import دوال_HBS10
-from .habs11 import دوال_HBS11
-from .cobol import دوال_COBOL
-from .fortran import دوال_FORTRAN
-from .basic import دوال_BASIC
-from .sql import دوال_القاعدة
-from .networks import دوال_الشبكة
+
+
+# محاولة استيراد نسبي (محلي) أو مطلق (Pyodide)
+try:
+    from .lexer import tokenize
+    from .parser import parse_all, Expression
+    from .environment import build_default_env, Environment
+    from .crypto import دوال_التشفير
+    from .files import دوال_الملفات
+    from .bigram import دوال_البيغرام
+    from .tutor import دوال_المساعد
+    from .habs8 import دوال_HBS8
+    from .habs9 import دوال_HBS9
+    from .habs10 import دوال_HBS10
+    from .habs11 import دوال_HBS11
+    from .cobol import دوال_COBOL
+    from .fortran import دوال_FORTRAN
+    from .basic import دوال_BASIC
+    from .sql import دوال_القاعدة
+    from .networks import دوال_الشبكة
+except ImportError:
+    # Pyodide — استيراد مطلق
+    from lexer import tokenize
+    from parser import parse_all, Expression
+    from environment import build_default_env, Environment
+    from crypto import دوال_التشفير
+    from files import دوال_الملفات
+    from bigram import دوال_البيغرام
+    from tutor import دوال_المساعد
+    from habs8 import دوال_HBS8
+    from habs9 import دوال_HBS9
+    from habs10 import دوال_HBS10
+    from habs11 import دوال_HBS11
+    from cobol import دوال_COBOL
+    from fortran import دوال_FORTRAN
+    from basic import دوال_BASIC
+    from sql import دوال_القاعدة
+    from networks import دوال_الشبكة
 
 
 # ============================================================
