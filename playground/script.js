@@ -1,3 +1,5 @@
+import { loadPyodide } from "https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.mjs";
+
 // 🕋 لسان قريش — الملعب التفاعلي
 
 let pyodide = null;
@@ -26,7 +28,7 @@ const الأمثلة = {
 (اعرض "طلاب")`
 };
 
-function updateStatus(text, نوع = "info") {
+window.updateStatus = function updateStatus(text, نوع = "info") {
     const status = document.getElementById("status");
     const statusText = document.getElementById("status-text");
     if (status && statusText) {
@@ -35,15 +37,15 @@ function updateStatus(text, نوع = "info") {
     }
 }
 
-function loadExample(اسم) {
+window.loadExample = function loadExample(اسم) {
     document.getElementById("code").value = الأمثلة[اسم] || "";
 }
 
-function clearOutput() {
+window.clearOutput = function clearOutput() {
     document.getElementById("output").textContent = "في انتظار تشغيل الكود...";
 }
 
-async function runCode() {
+window.runCode = async function runCode() {
     if (!isReady) {
         alert("⚠️ انتظر تحميل المفسّر...");
         return;
@@ -95,9 +97,7 @@ async function initialize() {
     try {
         updateStatus("⏳ جاري تحميل Python (Pyodide)...", "info");
 
-        pyodide = await loadPyodide({
-            indexURL: "https://cdn.jsdelivr.net/pyodide/v0.26.2/full/"
-        });
+        pyodide = await loadPyodide();
 
         updateStatus("⏳ تحميل quraysh...", "info");
 
