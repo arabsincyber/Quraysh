@@ -164,7 +164,7 @@ test = q.eval_string('(اطبع "اختبار")')
         document.getElementById("run").disabled = false;
     } catch (error) {
         updateStatus("❌ فشل التحميل: " + error.message, "error");
-        console.error(error);
+        console.error("ERROR:", error); console.error("STACK:", error.stack); alert("خطأ: " + error.message);
     }
 }
 
