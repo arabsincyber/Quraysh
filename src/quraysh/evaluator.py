@@ -22,6 +22,7 @@ from .bigram import دوال_البيغرام
 from .tutor import دوال_المساعد
 from .habs8 import دوال_HBS8
 from .habs9 import دوال_HBS9
+from .habs10 import دوال_HBS10
 from .cobol import دوال_COBOL
 from .fortran import دوال_FORTRAN
 from .basic import دوال_BASIC
@@ -103,6 +104,7 @@ class Quraysh:
         self.env.update(دوال_المساعد) if hasattr(self.env, 'update') else [self.env.set(k, v) for k, v in دوال_المساعد.items()]
         self.env.update(دوال_HBS8) if hasattr(self.env, 'update') else [self.env.set(k, v) for k, v in دوال_HBS8.items()]
         self.env.update(دوال_HBS9) if hasattr(self.env, 'update') else [self.env.set(k, v) for k, v in دوال_HBS9.items()]
+        self.env.update(دوال_HBS10) if hasattr(self.env, 'update') else [self.env.set(k, v) for k, v in دوال_HBS10.items()]
         self.env.update(دوال_BASIC) if hasattr(self.env, 'update') else [self.env.set(k, v) for k, v in دوال_BASIC.items()]
         self.env.update(دوال_FORTRAN) if hasattr(self.env, 'update') else [self.env.set(k, v) for k, v in دوال_FORTRAN.items()]
         self.env.update(دوال_COBOL) if hasattr(self.env, 'update') else [self.env.set(k, v) for k, v in دوال_COBOL.items()]
