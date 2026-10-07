@@ -1,4 +1,3 @@
-import { loadPyodide } from "./pyodide/pyodide.mjs";
 
 // 🕋 لسان قريش — الملعب التفاعلي
 
@@ -97,7 +96,9 @@ async function initialize() {
     try {
         updateStatus("⏳ جاري تحميل Python (Pyodide)...", "info");
 
-        pyodide = await loadPyodide();
+        pyodide = await loadPyodide({
+            indexURL: "./pyodide/"
+        });
 
         updateStatus("⏳ تحميل quraysh...", "info");
 
