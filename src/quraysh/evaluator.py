@@ -41,7 +41,10 @@ try:
     from .sql import دوال_القاعدة
     from .networks import دوال_الشبكة
 except ImportError:
-    # Pyodide — استيراد مطلق
+    # Pyodide — نستخدم try مرة أخرى مع sys.path
+    import sys as _sys
+    import os as _os
+    _sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
     from lexer import tokenize
     from parser import parse_all, Expression
     from environment import build_default_env, Environment
