@@ -29,7 +29,12 @@ const الأمثلة = {
     ai: `; HBS-8 — Transformer عربي 🤖
 ; يكتب نص عربي من القرآن
 (توليد_نص "بسم الله" 10)
-(توليد_نص "الحمد لله" 10)`
+(توليد_نص "الحمد لله" 10)`,
+
+    ai9: `; HBS-9 — Transformer أقوى 🚀
+; vocab 1000 + نص أدق
+(توليد_نص_9 "بسم الله" 12)
+(توليد_نص_9 "الحمد لله" 12)`
 };
 
 window.updateStatus = function updateStatus(text, نوع = "info") {
@@ -110,7 +115,7 @@ async function initialize() {
         const ملفات = [
             "lexer", "parser", "environment", "evaluator",
             "crypto", "networks", "sql", "files",
-            "basic", "fortran", "cobol", "bigram", "tutor", "habs8"
+            "basic", "fortran", "cobol", "bigram", "tutor", "habs8", "habs9"
         ];
 
         try { pyodide.FS.mkdir("/tmp/quraysh"); } catch(e) {}
@@ -147,6 +152,19 @@ async function initialize() {
             }
         } catch (e) {
             console.warn("⚠️ vocab JSON:", e);
+        }
+
+        // حمّل vocab HBS-9
+        try {
+            const vocabUrl9 = "https://raw.githubusercontent.com/arabsincyber/Quraysh/main/src/quraysh/habs_9_vocab.json";
+            const vocabResp9 = await fetch(vocabUrl9);
+            if (vocabResp9.ok) {
+                const vocabText9 = await vocabResp9.text();
+                pyodide.FS.writeFile("/tmp/quraysh/habs_9_vocab.json", vocabText9);
+                console.log("✅ vocab-9 JSON محمّل");
+            }
+        } catch (e) {
+            console.warn("⚠️ vocab-9 JSON:", e);
         }
         
         pyodide.runPython(`
