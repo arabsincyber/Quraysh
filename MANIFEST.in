@@ -1,0 +1,25 @@
+# ملفات أساسية
+include README.md
+include LICENSE
+include CHANGELOG.md
+include VERSION
+
+# ملفات فلسفية
+include MESSAGE.md
+include WARNING.md
+include MANIFESTO.md
+include PROVENANCE.md
+
+# كود المصدر
+recursive-include src/quraysh *.py
+recursive-include src/quraysh *.json
+recursive-include tools/qur *.py
+
+# أمثلة
+recursive-include examples *.lisp
+
+# استثناءات
+global-exclude *.pyc
+global-exclude __pycache__
+global-exclude *.bak
+global-exclude .DS_Store

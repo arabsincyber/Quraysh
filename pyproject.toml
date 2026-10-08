@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "quraysh"
+version = "3.0.0"
+description = "🕋 لسان قريش — لغة برمجة عربية كاملة (مبنية على Lisp)"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "Mohammed", email = "arabsincyber@proton.me"}
+]
+keywords = ["arabic", "programming", "language", "lisp", "quraysh", "عرب"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: Arabic",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Interpreters",
+    "Topic :: Software Development :: Compilers",
+]
+
+[project.urls]
+Homepage = "https://github.com/arabsincyber/Quraysh"
+Repository = "https://github.com/arabsincyber/Quraysh"
+Documentation = "https://github.com/arabsincyber/Quraysh/blob/main/README.md"
+"Bug Tracker" = "https://github.com/arabsincyber/Quraysh/issues"
+
+[project.scripts]
+quraysh = "quraysh.repl:main"
+qur = "qur.main:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+packages = ["quraysh", "qur"]
+include-package-data = true
+
+[tool.setuptools.package-data]
+quraysh = ["*.json", "*.md"]
