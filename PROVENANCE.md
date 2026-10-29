@@ -1,66 +1,172 @@
-# 📜 بصمة المشروع — إثبات الملكية
-
-> **توثيق زمني وتقني لمشروع "لسان قريش"**
-
----
-
-## 📅 معلومات المشروع
-
-| العنصر | القيمة |
-|--------|--------|
-| **الاسم** | Quraysh — لسان قريش |
-| **الإصدار** | v3.0.0 |
-| **المطور** | محمد (Mohammed) |
-| **الجهاز** | Infinix X6873 |
-| **تاريخ البداية** | 2026-09-11 |
-| **تاريخ الإصدار** | 2026-09-28 |
-| **الرخصة** | MIT + ملحق أخلاقي |
-| **GitHub** | github.com/arabsincyber/Quraysh |
+# 🏛️ إثبات الملكية والبصمة الرقمية (Provenance)
+**المشروع:** لسان قريش (Quraysh)
+**المطور:** محمد (arabsincyber)
+**التاريخ:** 2026-10-29 17:57:51 +03
+**الوصف:** هذا الملف يحتوي على بصمة SHA256 لكل ملف في المشروع لإثبات سلامته وعدم تعديله.
 
 ---
 
-## 🔐 البصمة الرقمية
-
-للحصول على بصمات الملفات الحالية:
-
-    cd ~/lugha/quraysh-v2
-    sha256sum src/quraysh/*.py
+## 🔑 البصمات (SHA256):
+| الملف | البصمة (SHA256) |
+| :--- | :--- |
+| `./.pytest_cache/README.md` | `73fd6fccdd802c419a6b2d983d6c3173b7da97558ac4b589edec2dfe443db9ad` |
+| `./CHANGELOG.md` | `79617e5c1683b4e8ed4a231402748f71a7b01b24eaad52c1ba82a113ac07091f` |
+| `./MANIFESTO.md` | `e26278be65d4c90b02d595dc46e0688d2b7de5e4581b74fcaca3beef54d6740f` |
+| `./MESSAGE.md` | `c4c77f6760cceebacebb90d1c597dfedc8a4f7b26d16dd54250d610ec36995be` |
+| `./PROVENANCE.md` | `82d8028cc70afcbc5c0c9e16adad5b9e38ac3aef6efc45846d5ccb5752701a20` |
+| `./README-OSINT.md` | `2e4c7c30b5d9418a4a2d29131e505de8980ec2afba0e42f56f8c12013f6514d9` |
+| `./README.md` | `a5367b7e8c6d56c17504b53a1b518023ccaa11188f8c17603cc00ccb3cfe10be` |
+| `./WARNING.md` | `9ebb80508fced619d58ae56dcd54c9220ec204786fb572c31e7317fc2239f6f4` |
+| `./all_subs_tiktok.com.txt` | `e168c6463c531b5857cc8f2e09347b0977d9292bbce7f6835e5e9b0f41a47f12` |
+| `./build/lib/qur/__init__.py` | `1563a2852adebf9cc85dadd41fc7e1c8693ce65691e016089c3a57db788369a5` |
+| `./build/lib/qur/commands/__init__.py` | `0449b4aebc806597241b46a14986efdcb3d789fac30b8e06b5d5f7e63cc0e4eb` |
+| `./build/lib/qur/commands/build.py` | `2d235ce084ab557e3844166729d5d05f84eaf3dc662bb6ee0e08c90d1cc1e2e2` |
+| `./build/lib/qur/commands/doc.py` | `5bda02d596cd88295aafb307f74a07bfd373fb4d9075c41b6dcf6e52bee4b254` |
+| `./build/lib/qur/commands/fmt.py` | `fc503c339527d83bfebb39f2e74f87846600564184ebf288b7adfae708a27e43` |
+| `./build/lib/qur/commands/install.py` | `c4593a8694012ed73b02b1c6895e90677e2d558d6af599548714cc3be138a9cf` |
+| `./build/lib/qur/commands/pack.py` | `7e7a1bace4838ff2ab6a33bdb0e245c4faba4b21a575c355b0fec1cbe6c79e4a` |
+| `./build/lib/qur/commands/pkg.py` | `59ecd197ca123b27679b95fc4f71b763841e136adff095bb65f7f876403a48b4` |
+| `./build/lib/qur/commands/publish.py` | `340f0033da236ce1cc4fc91931fd1462df2a6a2ec17ac6a67ce82030551c0fb8` |
+| `./build/lib/qur/commands/scan/__init__.py` | `3c734b15ab75523da790b7a439ca7eefceda29992065d85a0cb0c8323fd7eca6` |
+| `./build/lib/qur/commands/scan/info.py` | `074e87df3e46afaa71e89cbbce266b2bb2d2889a0037391fa5ef05e6d9c7b3ae` |
+| `./build/lib/qur/commands/test.py` | `46fb6aa1198c1d066a4fd796b916f91f977e0e8965adcf534ae802a8619d42c6` |
+| `./build/lib/qur/commands/update.py` | `a6531d5fcc488be717848c22cab3e924790c8fc5f3eee8a52cd42a723746fcd3` |
+| `./build/lib/qur/main.py` | `62a35d20d94f08c161f8dcf2c3316fe0220f6a6edba5edced51bc349862bf17b` |
+| `./build/lib/quraysh/__init__.py` | `b1602c3c0bd9b19915a383442cdae67a45eb812919d24a9628c5b9ad115e945b` |
+| `./build/lib/quraysh/basic.py` | `5bdcf06f4edb3136db5146d8f824a14e2af35731182fe15ddb0984e2a52087cf` |
+| `./build/lib/quraysh/bigram.py` | `20a4096d137fb24b5c03f80d22cc0f6ca8075d408452cb303233157967a0683b` |
+| `./build/lib/quraysh/cobol.py` | `24c46ddf17adbb002e4441f96cc14522a2a6565d7de79409fd8b5d44e6282b8d` |
+| `./build/lib/quraysh/crypto.py` | `db9ce3354b8022eb79e6972f2cece34c3391ddec2d6417fe74c285ff76ee0edd` |
+| `./build/lib/quraysh/environment.py` | `87c0da473eda77ebaa675da27e3fbc723c10f5e4c657aa6491f6b25391d72250` |
+| `./build/lib/quraysh/evaluator.py` | `6de84abc1b4f2bee00f63174b86b128c9e61c06df38df994cf3cda20764e4303` |
+| `./build/lib/quraysh/files.py` | `274845e5b6aded1d8c95104dc4e736c80e0fe0064af9fc655773a46fb2b12af4` |
+| `./build/lib/quraysh/fortran.py` | `1749d558ffe43ada54e9ce0ad009869e64556f9a7ac8c520ff01a71c31d11e42` |
+| `./build/lib/quraysh/habs10.py` | `e17095a5ba671b127ab14ad1814b76dee5f1778ea75008b19b15511aa54410ea` |
+| `./build/lib/quraysh/habs11.py` | `383d6013b7e8402c82643f038daf86b9ca7e4595d7c07980ac73281960c2e8d7` |
+| `./build/lib/quraysh/habs8.py` | `96f7f84f41d5d57e24259f289d95ae290a2e3a8041194eece14fcbfade0dd69a` |
+| `./build/lib/quraysh/habs9.py` | `091e0186aa217067a6133675f84b9b41772887913eee37760602c3c27f7a8fdf` |
+| `./build/lib/quraysh/lexer.py` | `632c6fad65161c4944514226f8af77ccf0ab45c53d2c51d314fd6945a1301bab` |
+| `./build/lib/quraysh/networks.py` | `f22f48a7bb6c505bb4b44fabcd990b6711d7bef156211dfa90cfe2c0d1aee90b` |
+| `./build/lib/quraysh/parser.py` | `81d01b39f1705b51b9fa764a7122b994dc9b6b8a378879bd8fb4c3fefb11e8a8` |
+| `./build/lib/quraysh/repl.py` | `81cc278d91a7ddad423664c52c899f7d3c64cb2f9d19480bac424c72ac952e8a` |
+| `./build/lib/quraysh/sandbox.py` | `bb7d2ba108aa808762d6cb3ad748128d4f11916d97dfbb665636af57d4506402` |
+| `./build/lib/quraysh/security.py` | `20277a706129d95a529d66be9d62091360700481b6f70f4822fc943fcd790e0a` |
+| `./build/lib/quraysh/sql.py` | `ccb90d02a805a60605559575d1a70e5e7431e542daa745b4225e41c83687fed4` |
+| `./build/lib/quraysh/tutor.py` | `c19948cdfcf675bc0882bd67c3e9757456ee54f390d94c40386bdc3ae602da35` |
+| `./compile_code.py` | `b6c1b5d75c085568e205e7e09b013b68ca133ce993970f99108e0d5b8e72a165` |
+| `./crtsh_tiktok.com.txt` | `f98dcec4d5db64223072ce98a2fa0c9ba4e13e333ef8d3496adb950f9c8e3aee` |
+| `./docs/transformers/README.md` | `5950de593acaa1c88f62111288eb3c7e98271222e05ed2a47e0dac0252ba5f63` |
+| `./docs/transformers/implementation/01_softmax.py` | `5b3b6b81291868037ae97eb65eb4509b6ec545def6483fb312b86dacaf49134d` |
+| `./docs/transformers/implementation/02_sampling.py` | `f2664af7adb7147fa5b47b1ed2c2be49135b67c360d69b11e9b506d6d68c1df3` |
+| `./docs/transformers/implementation/03_attention.py` | `47c95d5b2bbff4d9a55c2085c91cb4f57f88c6728e640b3b389a9b930af419de` |
+| `./docs/transformers/implementation/04_transformer.py` | `6a39a366b756ae1aaddadfaa1e292e2e4121e935d3530156e7bc9539e8617e76` |
+| `./docs/transformers/implementation/README.md` | `da36bd5b179cfaa9f724acb1310c7ca48b2cec5c50003745ce7eaab0163c36a7` |
+| `./fingerprint.sh` | `918275c03092a272aa22f2a03a57fff0d958249330a779ca4d12f51497ff5505` |
+| `./fudotech_httpx.txt` | `a30c38c1caef4cbba1c9677ea2a004966fa7da134895f09532c22c82114a673e` |
+| `./fudotech_ports.txt` | `6684b89bf7e37808126659da5d90a60970beda7b84adf7779296a8113fc7c1ec` |
+| `./fudotech_subs.txt` | `21b36af43575b7f7653e2ca2bb0e4d62f2ba888260613454ba66f6fd282bd322` |
+| `./live_mass_tiktok.com.txt` | `27ddebf618e7fd3a32ba8542b4674f4b8e44da1a09fc8a4be1acd6d7d8fd78d2` |
+| `./live_tiktok.com.txt` | `7aa68612bfd8c93b6d286f4dc0b667045770093cd059d64a0341222aaa156745` |
+| `./mass_tiktok.com.txt` | `f98dcec4d5db64223072ce98a2fa0c9ba4e13e333ef8d3496adb950f9c8e3aee` |
+| `./models/corpus/quran/quran.txt` | `460d6552c90a0c4682a10974a174cbe12e162263a5f07cbc4f152de2d58ea90e` |
+| `./models/habs/README.md` | `da31aed21683dd1366596f9c4496e9aba20faf6b6c3854eb1e05bce62b006a46` |
+| `./models/habs/data/corpus.txt` | `4e664fdc04babbc4f5e20c636c04010530f766d74dcd92b904439bec6c7722dc` |
+| `./models/habs/habs_0.py` | `ce46b9541615507e2fbe0e96628d8b25611bc53997c8a6721f08c1169a88990a` |
+| `./models/habs/habs_1.py` | `a2ba8b5b1530dd59d4502ac8c81647ed1edcb3395a34bff854d7489ddb3986d5` |
+| `./models/habs/habs_10.py` | `03469be34d7e2b5b37b25238263ab77af4e6056eb4ba8df7b3064a094cc77b93` |
+| `./models/habs/habs_11.py` | `b6c6180c1af05e3d909a0294868b0466ca3018c2b030b78206eb849cc08f4a2c` |
+| `./models/habs/habs_2.py` | `89676092db236d3174684c89fb0c30ba86b665fc26fc939c1c022dcf8e084495` |
+| `./models/habs/habs_2_train.py` | `d23db73409352f270c7d5f1087577dbbf2123382a20c04b7ae1044c7316673c2` |
+| `./models/habs/habs_3.py` | `517efd287ad24f8a08f324b666b499c2df248250b5c4cee856f9e1979d3a7398` |
+| `./models/habs/habs_4.py` | `875430fd0d912b1e11db175e474f394f90b45ef21d49f6cda85a8e5c0b3fadab` |
+| `./models/habs/habs_5.py` | `f12606e62e695449d1063cfe029a00735515f76f9113dcd1fd97f0c5f2377fbb` |
+| `./models/habs/habs_6.py` | `72518a642f30a5646f60cb64ca0d73cdfcab4221721b2125e080154e0423b2c6` |
+| `./models/habs/habs_6_1.py` | `58c7bf67c2f4b0d3cfd77e8393b7f46a237f7c546aa0f7255c5f3cd5f9e45746` |
+| `./models/habs/habs_7.py` | `285d4794190f10956ae0faa7da0e56c4f4445dc453bf18b178e547eb82b2d922` |
+| `./models/habs/habs_8.py` | `65da80b322126c4676fbe376e8fbc98751642853330025d58afe70361f603ac3` |
+| `./models/habs/habs_8_train.py` | `d254b0bb03886317fdf22cc9e99d80d1adf55e75fd3bff22066d6e46855fba02` |
+| `./models/habs/habs_9.py` | `091e0186aa217067a6133675f84b9b41772887913eee37760602c3c27f7a8fdf` |
+| `./playground/README.md` | `f0578622c37634175867b937f823806b4efc48c970f70a22e29ff8d040f4b466` |
+| `./playground/_test_versions.sh` | `ea2fb76acbb2db386c472596e129572b3348cf7b5c935ca828a2923b1a550b73` |
+| `./report_tiktok.com.md` | `85165e087298ec51abc09fbb3d79389cab4850924911303eabb059b03fd08d3b` |
+| `./requirements.txt` | `0e7735726d2f477c46a3db49f395103419ac8d58219ef8d4a7fbda17e7021854` |
+| `./scripts/signature.sh` | `0de46a67b11f2047d630f408cc57c9548ca25b2f0340c9a21e62a42fd79f33f5` |
+| `./setup.py` | `b7ae8f900713423b725a8bcc7043716e0319641c13c57c8d433e8fd32e7d4511` |
+| `./src/quraysh.egg-info/SOURCES.txt` | `b0a0a5b835431e90a82096b9b2c25967e2dcd5c7185d31658dea6c208f33919e` |
+| `./src/quraysh.egg-info/dependency_links.txt` | `01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b` |
+| `./src/quraysh.egg-info/entry_points.txt` | `a26fe69cbc752c21d06ce0a5f2ea7be2c28331221c81438817c7c61f6dedeeaa` |
+| `./src/quraysh.egg-info/top_level.txt` | `5e0fa791191caf0c1081bd6389169ad32c8a32807f1d568ee982123c4b6a4fff` |
+| `./src/quraysh/__init__.py` | `b1602c3c0bd9b19915a383442cdae67a45eb812919d24a9628c5b9ad115e945b` |
+| `./src/quraysh/basic.py` | `5bdcf06f4edb3136db5146d8f824a14e2af35731182fe15ddb0984e2a52087cf` |
+| `./src/quraysh/bigram.py` | `20a4096d137fb24b5c03f80d22cc0f6ca8075d408452cb303233157967a0683b` |
+| `./src/quraysh/cobol.py` | `24c46ddf17adbb002e4441f96cc14522a2a6565d7de79409fd8b5d44e6282b8d` |
+| `./src/quraysh/crypto.py` | `db9ce3354b8022eb79e6972f2cece34c3391ddec2d6417fe74c285ff76ee0edd` |
+| `./src/quraysh/environment.py` | `87c0da473eda77ebaa675da27e3fbc723c10f5e4c657aa6491f6b25391d72250` |
+| `./src/quraysh/evaluator.py` | `6de84abc1b4f2bee00f63174b86b128c9e61c06df38df994cf3cda20764e4303` |
+| `./src/quraysh/files.py` | `274845e5b6aded1d8c95104dc4e736c80e0fe0064af9fc655773a46fb2b12af4` |
+| `./src/quraysh/fortran.py` | `1749d558ffe43ada54e9ce0ad009869e64556f9a7ac8c520ff01a71c31d11e42` |
+| `./src/quraysh/habs10.py` | `e17095a5ba671b127ab14ad1814b76dee5f1778ea75008b19b15511aa54410ea` |
+| `./src/quraysh/habs11.py` | `383d6013b7e8402c82643f038daf86b9ca7e4595d7c07980ac73281960c2e8d7` |
+| `./src/quraysh/habs8.py` | `96f7f84f41d5d57e24259f289d95ae290a2e3a8041194eece14fcbfade0dd69a` |
+| `./src/quraysh/habs9.py` | `091e0186aa217067a6133675f84b9b41772887913eee37760602c3c27f7a8fdf` |
+| `./src/quraysh/intel/__init__.py` | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+| `./src/quraysh/intel/core.py` | `45c9f1eb5e7fc9d0fad73b2f421747ed1b923eb6aa64915eb1ea9108fae6c162` |
+| `./src/quraysh/intel/domain.py` | `5feeacf6d601ac1c82d1fa2ea9e15288a114ad3302b1777b67ae9acfe3141fb4` |
+| `./src/quraysh/intel/email.py` | `da61c18d2bba5139fc44dad73a23367f1787b742b31add2ce6488f4969585e29` |
+| `./src/quraysh/intel/port_scanner.py` | `8e16535af9ba536dbcaee6a0d215d7294352e0d4e28ffa789d30089021b39a2f` |
+| `./src/quraysh/intel/recon.py` | `52d90f50ff3352c77157fa17ef4e478060b5006b19f7e93203d391eb2e957230` |
+| `./src/quraysh/intel/ssl_scanner.py` | `b0737d9ac3bd2237e084bde9cb6ef9fff55c92d093b8d46e8e87c8755b244d38` |
+| `./src/quraysh/intel/subhunter.py` | `29b0539290981937f8f3eac5bca996d1721bd76f8be08eac32c415945f0f431e` |
+| `./src/quraysh/intel/system_scan.py` | `2dd8096e5c1d0e1bd19fa2aee6fe42df672073ad6d45c3dc4dcef7b0691d2366` |
+| `./src/quraysh/intel/url_scanner.py` | `018d4831784d497374b4962bd0b577042df1c720075b57ed875f3bcf43f7f292` |
+| `./src/quraysh/lexer.py` | `632c6fad65161c4944514226f8af77ccf0ab45c53d2c51d314fd6945a1301bab` |
+| `./src/quraysh/networks.py` | `f22f48a7bb6c505bb4b44fabcd990b6711d7bef156211dfa90cfe2c0d1aee90b` |
+| `./src/quraysh/parser.py` | `81d01b39f1705b51b9fa764a7122b994dc9b6b8a378879bd8fb4c3fefb11e8a8` |
+| `./src/quraysh/repl.py` | `95ff121748cd24d78ea3c2f5b2d1c51875267c09ac244c0a57aaade67ad8f705` |
+| `./src/quraysh/sandbox.py` | `bb7d2ba108aa808762d6cb3ad748128d4f11916d97dfbb665636af57d4506402` |
+| `./src/quraysh/security.py` | `20277a706129d95a529d66be9d62091360700481b6f70f4822fc943fcd790e0a` |
+| `./src/quraysh/sql.py` | `ccb90d02a805a60605559575d1a70e5e7431e542daa745b4225e41c83687fed4` |
+| `./src/quraysh/tutor.py` | `c19948cdfcf675bc0882bd67c3e9757456ee54f390d94c40386bdc3ae602da35` |
+| `./subs_tiktok.com.txt` | `4605407919fbf4f5d19cf3ab42fe93795276b41bd03f01c046cae77028183154` |
+| `./tests/__init__.py` | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+| `./tests/test_basic.py` | `16a75415a2e84e95da464eda4aaca9da4eaa26bdabcd9392e22895031e11289f` |
+| `./tests/test_bigram.py` | `96de0e9f6268c9acbc1a3ce05f35283785d944a4c39fedc89595270a3a9c3350` |
+| `./tests/test_cobol.py` | `68b8ab691c21c5e8a54da8d64ec000da79f0e447091be1be717f12d7d49030aa` |
+| `./tests/test_crypto.py` | `8298e7229f9b2964326bdd9dc189fa2717181b4a7167a095ef150f3340ec1db3` |
+| `./tests/test_files.py` | `171308b01cb8c7d7546b0ce8a0152a2eb611c4648f37c81b8bb045975b6f08f4` |
+| `./tests/test_fortran.py` | `e94d416b5cfef42c3e4382da1ec2aa4f30f992198d9a3d9e47c61fcab934b117` |
+| `./tests/test_networks.py` | `c0e1c04dde0f4bed11441a5b9fc4a8dfbfcf15634697f9bd22d6e89653149ac9` |
+| `./tests/test_repl.py` | `a9cb9a5e19d0f95fae2443406cb7dd6e552192e9337d30cce05f7310a90a2527` |
+| `./tests/test_sql.py` | `55a18a448e0b2733f674aed7ac2026c31d51e399e54e187ac0832a3ae15a2224` |
+| `./tests/test_tutor.py` | `0e3c33bcaf21252c837b8e1bd41fa72323cace74de7cd8647877f5dbf2f65463` |
+| `./tools/qur-crtsh/main.py` | `937167a781054edc8c83ae3a3e9fa1aaae85543234c11398ae92e0043827671d` |
+| `./tools/qur-hunter/main.py` | `dda885222eea5b13edf9088b5d7026beed30cf786a678c407cb0e3bab5753c26` |
+| `./tools/qur-intel/__init__.py` | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` |
+| `./tools/qur-intel/main.py` | `a58e8f9a632dea885d95e2d2d325795e774595e18b4f31bcb7a9cb0f9b1e4922` |
+| `./tools/qur-mass/main.py` | `1cadcad0805b3c2784fc2e56d515cfea21fefe170136431dd1592fc5cf71d118` |
+| `./tools/qur-scan/__init__.py` | `e44e2b71e464074aab5bbb45e40c195d58ad5950fea19425da8dcc1d05a5a0ad` |
+| `./tools/qur-scan/live.py` | `9ed8b8d796db3690751317f109d860f78614e2e6366cf94ef3a0ab84d9a1c53e` |
+| `./tools/qur-scan/main.py` | `06341bdb758d0eb17071b573de0428add07714963d2f03eac2c581d4cf27dd6f` |
+| `./tools/qur-scan/processes.py` | `a80205808879ecda77ae3b8ea0eb661b75043d9e22b8e6f6efbb8cc53aeecb60` |
+| `./tools/qur-scan/system.py` | `352956c26306b92bc2a066b09f919b2727689b0536eb184bc7394ebb30a613e0` |
+| `./tools/qur-subs/main.py` | `16e83a2378c70d2f38ed6261849e1d91e2ef60c5e31849da8ab6ddfed65ecf11` |
+| `./tools/qur/__init__.py` | `f92890b8fbf393b9675a3b202ae81878711c7c5a4ff0900602c3f4e557e561f9` |
+| `./tools/qur/commands/__init__.py` | `0449b4aebc806597241b46a14986efdcb3d789fac30b8e06b5d5f7e63cc0e4eb` |
+| `./tools/qur/commands/build.py` | `2d235ce084ab557e3844166729d5d05f84eaf3dc662bb6ee0e08c90d1cc1e2e2` |
+| `./tools/qur/commands/doc.py` | `5bda02d596cd88295aafb307f74a07bfd373fb4d9075c41b6dcf6e52bee4b254` |
+| `./tools/qur/commands/fmt.py` | `fc503c339527d83bfebb39f2e74f87846600564184ebf288b7adfae708a27e43` |
+| `./tools/qur/commands/install.py` | `c4593a8694012ed73b02b1c6895e90677e2d558d6af599548714cc3be138a9cf` |
+| `./tools/qur/commands/pack.py` | `7e7a1bace4838ff2ab6a33bdb0e245c4faba4b21a575c355b0fec1cbe6c79e4a` |
+| `./tools/qur/commands/pkg.py` | `59ecd197ca123b27679b95fc4f71b763841e136adff095bb65f7f876403a48b4` |
+| `./tools/qur/commands/publish.py` | `340f0033da236ce1cc4fc91931fd1462df2a6a2ec17ac6a67ce82030551c0fb8` |
+| `./tools/qur/commands/scan/__init__.py` | `3c734b15ab75523da790b7a439ca7eefceda29992065d85a0cb0c8323fd7eca6` |
+| `./tools/qur/commands/scan/info.py` | `074e87df3e46afaa71e89cbbce266b2bb2d2889a0037391fa5ef05e6d9c7b3ae` |
+| `./tools/qur/commands/test.py` | `46fb6aa1198c1d066a4fd796b916f91f977e0e8965adcf534ae802a8619d42c6` |
+| `./tools/qur/commands/update.py` | `a6531d5fcc488be717848c22cab3e924790c8fc5f3eee8a52cd42a723746fcd3` |
+| `./tools/qur/main.py` | `62a35d20d94f08c161f8dcf2c3316fe0220f6a6edba5edced51bc349862bf17b` |
+| `./tools/مشروعي/README.md` | `68dfc18088e2d0b365c15b900f0f826356a094457a5cc091f9bec2f7e765eb3c` |
+| `./tools/مشروعي/docs/README.md` | `50b3bacd8705e383620bdefcbe9a408ff6d0b067c2a681a6eb6ec964b4a615ce` |
+| `./tools/مشروعي/docs/main.md` | `f938b9cc0db6c51b186aa4bc63047dd880d58b38cf446a728790cd21e719ce46` |
 
 ---
-
-## 📊 سجل Git
-
-جميع الـ commits موثقة:
-
-    git log --all --oneline
-
----
-
-## 🏷️ الإصدارات
-
-| الإصدار | التاريخ | الوصف |
-|---------|---------|--------|
-| v3.0.0 | 2026-09-28 | عائلة قريش كاملة (5 لغات) |
-
----
-
-## 🛡️ إثبات الملكية
-
-هذا الملف + GitHub + البصمة = **إثبات ملكية موثق**.
-
-أي محاولة سرقة أو نسب المشروع لغير صاحبه:
-- مخالفة قانونية — بموجب قوانين الملكية الفكرية.
-- مخالفة أخلاقية — بموجب مبادئ المجتمع التقني.
-- موثقة — في GitHub + هذا الملف + الـ commits.
-
----
-
-## 🎯 الرؤية
-
-**"لسان قريش" = لغة برمجة عربية كاملة.**
-**هدفها: تمكين العربي من الكتابة بلغته.**
-**مبدأها: "الوضوح = أمان".**
-
----
-
-💙 صُنع بـ 💙 في العالم العربي
+*تم إنشاء هذا الملف تلقائياً بواسطة سكربت fingerprint.sh*
