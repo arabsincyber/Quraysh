@@ -1,64 +1,53 @@
 import sys
 import os
+import argparse
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../../src')))
 
-from quraysh.intel.core import IntelCore
 from quraysh.intel import domain as domain_scanner
-from quraysh.intel import email as email_scanner
-from quraysh.intel import system_scan
-from bs4 import BeautifulSoup
-import requests
-from urllib.parse import quote
+from quraysh.intel import url_scanner
+from quraysh.intel import port_scanner
 
-def print_banner():
-    print("\n╭──────────────────────────────────────────╮")
-    print("│   🕵️  لسان قريش - أداة الفحص الاستخباراتي  │")
-    print("│        الإصدار v1.3.0 (الشامل)           │")
-    print("╰──────────────────────────────────────────╯\n")
+def cmd_domain(domain):
+    print(f"[*] جاري فحص النطاق: {domain}")
+    print("\n--- WHOIS ---")
+    print(domain_scanner.get_whois(domain))
+    print("\n--- DNS ---")
+    print(domain_scanner.get_dns(domain))
+    print("\n--- IP & Geo ---")
+    print(domain_scanner.get_ip_info(domain))
 
-def search_duckduckgo(query, max_results=5):
-    headers = {'User-Agent': 'Mozilla/5.0'}
-    url = f"https://html.duckduckgo.com/html/?q={quote(query)}"
-    results = []
-    try:
-        res = requests.get(url, headers=headers, timeout=10)
-        soup = BeautifulSoup(res.text, 'html.parser')
-        for result in soup.find_all('a', class_='result__a')[:max_results]:
-            title = result.get_text()
-            link = result.get('href')
-            if link and link.startswith('//'): link = 'https:' + link
-            results.append({"title": title, "link": link})
-    except Exception: pass
-    return results
+def cmd_ports(host):
+    result = port_scanner.check_ports_report(host)
+    print("\n--- تقرير المنافذ ---")
+    print(f"المنافذ المفتوحة: {result.get('open_ports', 'لا يوجد')}")
+    if 'warnings' in result:
+        print("التحذيرات:")
+        for w in result['warnings']:
+            print(w)
 
-def run_wizard():
-    print_banner()
-    target = input("أدخل النطاق (Domain) للفحص: ").strip()
-    if not target: return print("❌ لم يتم إدخال نطاق.")
-    
-    auth = input("⚠️ هل أنت مصرح بفحص هذا النطاق؟ (y/n): ").strip().lower()
-    if auth != 'y': return print("🛑 تم إلغاء الفحص.")
+def main():
+    parser = argparse.ArgumentParser(description="لسان قريش - أداة الفحص الاستخباراتي الدفاعي")
+    subparsers = parser.add_subparsers(dest="command", help="الأوامر المتاحة")
 
-    core = IntelCore(target, authorized=True)
-    
-    # الفحوصات الأساسية
-    core.run_module("WHOIS", domain_scanner.get_whois, source="python-whois")
-    core.run_module("DNS Records", domain_scanner.get_dns, source="dnspython")
-    core.run_module("IP & Geo Info", domain_scanner.get_ip_info, source="ip-api.com")
-    core.run_module("Email Security", email_scanner.check_email_security, source="DNS TXT")
-    
-    # فحص الشبكة (جديد)
-    print("\n--- [فحص الشبكة والخدمات] ---")
-    core.run_module("Open Ports", system_scan.scan_ports, source="naabu")
-    core.run_module("SSL Check", system_scan.scan_ssl, source="nmap")
-    core.run_module("HTTP Headers", system_scan.get_headers, source="curl")
+    parser_domain = subparsers.add_parser("domain", help="فحص نطاق (WHOIS, DNS, IP)")
+    parser_domain.add_argument("target", help="النطاق المراد فحصه")
 
-    # فحص النطاقات الفرعية
-    sub_data = core.run_module("Subdomain Hunter", domain_scanner.get_subdomains_and_hunt, source="subfinder+httpx")
+    parser_url = subparsers.add_parser("url", help="فحص رابط مشبوه")
+    parser_url.add_argument("target", help="الرابط المراد فحصه")
 
-    print("\n" + "="*40)
-    if input("[?] هل تريد حفظ التقرير الكامل في markdown؟ (y/n): ").strip().lower() == 'y':
-        core.export_markdown(f"report_{target}.md")
+    parser_ports = subparsers.add_parser("ports", help="فحص المنافذ المفتوحة (دفاعياً)")
+    parser_ports.add_argument("target", help="الهدف (IP أو اسم النطاق)")
+
+    args = parser.parse_args()
+
+    if args.command == "domain":
+        cmd_domain(args.target)
+    elif args.command == "url":
+        cmd_url(args.target)
+    elif args.command == "ports":
+        cmd_ports(args.target)
+    else:
+        parser.print_help()
 
 if __name__ == "__main__":
-    run_wizard()
+    main()
