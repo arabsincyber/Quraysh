@@ -63,32 +63,56 @@ def quick_scan():
     print("✅ انتهى الفحص السريع بنجاح!")
     print("="*40)
 
-# 6. كشف الاحتيال (Scam Detection) ⭐ جديد
+# 6. كشف الاحتيال
 def scam_detection():
     text = input("\nأدخل النص أو الرابط المشبوه: ").strip()
     print(f"\n[*] جاري تحليل: {text}")
-    
-    suspicious_keywords = [
-        "hacker", "free", "giveaway", "binance", "million", "billion",
-        "win", "prize", "claim", "reward", "urgent", "verify", "account",
-        "suspended", "bitcoin", "crypto", "wallet", "transfer"
-    ]
-    
+    suspicious_keywords = ["hacker", "free", "giveaway", "binance", "million", "billion", "win", "prize", "claim", "reward", "urgent", "verify", "account", "suspended", "bitcoin", "crypto", "wallet", "transfer"]
     found = []
     for word in suspicious_keywords:
         if word.lower() in text.lower():
             found.append(word)
-    
     if found:
         print(f"  [⚠️] تحذير: تم اكتشاف كلمات مشبوهة: {', '.join(found)}")
         print("  [🚨] نتيجة: هذا النص قد يكون احتيالاً (Scam). لا تتفاعل معه!")
     else:
         print("  [✅] لم يتم اكتشاف كلمات مشبوهة. النص يبدو آمناً.")
 
+# 7. الرد السريع (Rapid Response) ⭐ جديد
+def rapid_response():
+    print("\n" + "="*40)
+    print("🚨 الرد السريع (Rapid Response) 🚨")
+    print("="*40)
+    print("هذه الميزة تساعدك على حماية أصولك بعد اختراق أمني (مثل اختراق Binance).")
+    
+    wallet = input("\nأدخل عنوان محفظتك (BTC/ETH): ").strip()
+    if not wallet:
+        print("❌ لم يتم إدخال عنوان.")
+        return
+
+    # محاكاة قائمة العناوين المخترقة (للتجربة)
+    compromised_wallets = [
+        "0x0000000000000000000000000000000000000000",  # عنوان وهمي
+        "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"         # عنوان ساتوشي (للتجربة)
+    ]
+
+    print(f"\n[*] جاري فحص المحفظة: {wallet}")
+    print("  [+] التحقق من قوائم الاختراق...")
+    
+    if wallet in compromised_wallets:
+        print("  [🚨] تحذير: محفظتك موجودة في قائمة العناوين المخترقة!")
+        print("  [🛑] نصيحة: توقف عن التداول فوراً، وانقل أصولك المتبقية إلى محفظة جديدة.")
+    else:
+        print("  [✅] محفظتك ليست في قائمة العناوين المخترقة (حسب المحاكاة).")
+        print("  [💡] نصيحة: تأكد من استخدام المصادقة الثنائية (2FA) دائماً.")
+    
+    print("\n  [⚠️] تذكير: هذه الأداة للفحص الدفاعي فقط، ولا تغني عن استشارة المختصين.")
+    print("="*40)
+
 # القائمة الرئيسية
 def main():
     print("\n" + "="*40)
-    print("🛡️  درع الوجبات (Wajabat Shield) v1.5.0")
+    print("🛡️  درع الوجبات (Wajabat Shield) v1.6.0")
     print("   أداة حماية شاملة (All-in-One)")
     print("="*40)
     print("\nاختر الخدمة:")
@@ -97,7 +121,8 @@ def main():
     print("  [3] فحص النظام")
     print("  [4] فحص الشبكة")
     print("  [5] الفحص السريع (Quick Scan) ⭐")
-    print("  [6] كشف الاحتيال (Scam Detection) ⭐ جديد")
+    print("  [6] كشف الاحتيال (Scam Detection) ⭐")
+    print("  [7] الرد السريع (Rapid Response) 🚨 جديد")
     print("  [0] خروج")
     
     choice = input("\nاختر رقم: ").strip()
@@ -108,6 +133,7 @@ def main():
     elif choice == "4": check_network()
     elif choice == "5": quick_scan()
     elif choice == "6": scam_detection()
+    elif choice == "7": rapid_response()
     else: print("👋 إلى اللقاء!")
 
 if __name__ == "__main__":
