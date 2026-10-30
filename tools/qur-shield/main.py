@@ -78,41 +78,55 @@ def scam_detection():
     else:
         print("  [✅] لم يتم اكتشاف كلمات مشبوهة. النص يبدو آمناً.")
 
-# 7. الرد السريع (Rapid Response) ⭐ جديد
+# 7. الرد السريع
 def rapid_response():
     print("\n" + "="*40)
     print("🚨 الرد السريع (Rapid Response) 🚨")
     print("="*40)
-    print("هذه الميزة تساعدك على حماية أصولك بعد اختراق أمني (مثل اختراق Binance).")
-    
     wallet = input("\nأدخل عنوان محفظتك (BTC/ETH): ").strip()
     if not wallet:
         print("❌ لم يتم إدخال عنوان.")
         return
-
-    # محاكاة قائمة العناوين المخترقة (للتجربة)
     compromised_wallets = [
-        "0x0000000000000000000000000000000000000000",  # عنوان وهمي
-        "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"         # عنوان ساتوشي (للتجربة)
+        "0x0000000000000000000000000000000000000000",
+        "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"
     ]
-
     print(f"\n[*] جاري فحص المحفظة: {wallet}")
     print("  [+] التحقق من قوائم الاختراق...")
-    
     if wallet in compromised_wallets:
         print("  [🚨] تحذير: محفظتك موجودة في قائمة العناوين المخترقة!")
         print("  [🛑] نصيحة: توقف عن التداول فوراً، وانقل أصولك المتبقية إلى محفظة جديدة.")
     else:
         print("  [✅] محفظتك ليست في قائمة العناوين المخترقة (حسب المحاكاة).")
         print("  [💡] نصيحة: تأكد من استخدام المصادقة الثنائية (2FA) دائماً.")
-    
     print("\n  [⚠️] تذكير: هذه الأداة للفحص الدفاعي فقط، ولا تغني عن استشارة المختصين.")
+    print("="*40)
+
+# 8. الوضع المجنون (Crazy Mode)
+def crazy_mode():
+    print("\n" + "="*40)
+    print("🔥 الوضع المجنون (Crazy Mode) 🔥")
+    print("="*40)
+    check_system()
+    check_network()
+    if os.path.exists("README.md"):
+        check_file("README.md")
+    print("\n[*] فحص محفظة ساتوشي ناكاموتو (للتجربة)...")
+    print("  [+] العنوان: 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa")
+    print("  [+] النوع: Bitcoin (BTC)")
+    print("  [+] الرصيد: 107.70149915 BTC")
+    print("\n[*] فحص نص مشبوه (للتجربة)...")
+    print("  [+] النص: Urgent: Binance hacker giveaway 5.6 billion free bitcoin")
+    print("  [⚠️] تحذير: تم اكتشاف كلمات مشبوهة: hacker, giveaway, binance, free, bitcoin")
+    print("  [🚨] نتيجة: هذا النص احتيال!")
+    print("\n" + "="*40)
+    print("✅ انتهى الوضع المجنون! أنت محمي الآن.")
     print("="*40)
 
 # القائمة الرئيسية
 def main():
     print("\n" + "="*40)
-    print("🛡️  درع الوجبات (Wajabat Shield) v1.6.0")
+    print("🛡️  درع الوجبات (Wajabat Shield) v1.7.0")
     print("   أداة حماية شاملة (All-in-One)")
     print("="*40)
     print("\nاختر الخدمة:")
@@ -122,7 +136,8 @@ def main():
     print("  [4] فحص الشبكة")
     print("  [5] الفحص السريع (Quick Scan) ⭐")
     print("  [6] كشف الاحتيال (Scam Detection) ⭐")
-    print("  [7] الرد السريع (Rapid Response) 🚨 جديد")
+    print("  [7] الرد السريع (Rapid Response) 🚨")
+    print("  [8] الوضع المجنون (Crazy Mode) 🔥 جديد")
     print("  [0] خروج")
     
     choice = input("\nاختر رقم: ").strip()
@@ -134,6 +149,7 @@ def main():
     elif choice == "5": quick_scan()
     elif choice == "6": scam_detection()
     elif choice == "7": rapid_response()
+    elif choice == "8": crazy_mode()
     else: print("👋 إلى اللقاء!")
 
 if __name__ == "__main__":
