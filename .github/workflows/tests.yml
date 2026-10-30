@@ -1,4 +1,4 @@
-name: 🧪 الاختبارات
+name: ✅ الاختبارات
 
 on:
   push:
@@ -14,18 +14,18 @@ jobs:
         python-version: ["3.10", "3.11", "3.12"]
 
     steps:
-      - name: 📥 جلب الكود
-        uses: actions/checkout@v4
+    - name: 📦 جلب الكود
+      uses: actions/checkout@v4
 
-      - name: 🐍 تجهيز Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
+    - name: 🐍 تجهيز Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
 
-      - name: 📦 تثبيت pytest
-        run: |
-          python -m pip install --upgrade pip
-          pip install pytest
+    - name: 📥 تثبيت المكتبات
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest requests dnspython python-whois beautifulsoup4
 
-      - name: 🧪 تشغيل الاختبارات
-        run: pytest tests/ -v
+    - name: 🧪 تشغيل الاختبارات
+      run: pytest tests/ -v
