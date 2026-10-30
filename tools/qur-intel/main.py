@@ -7,6 +7,7 @@ from quraysh.intel import domain as domain_scanner
 from quraysh.intel import url_scanner
 from quraysh.intel import port_scanner
 from quraysh.intel import ssl_scanner
+from quraysh.intel import wallet_scanner
 
 def cmd_domain(domain):
     print(f"[*] جاري فحص النطاق: {domain}")
@@ -60,6 +61,19 @@ def cmd_ssl(host):
         for w in result['warnings']:
             print(f"   - {w}")
 
+def cmd_wallet(address):
+    print(f"[*] جاري فحص المحفظة: {address}\n")
+    result = wallet_scanner.scan_wallet(address)
+    print(f"📍 العنوان: {result['address']}")
+    print(f"🏷️  النوع: {result['type']}")
+    print(f"🌐 الشبكة: {result['network']}")
+    print(f"💰 الرصيد: {result['balance']}")
+    print(f"✅ صالح: {'نعم' if result['valid'] else 'لا'}")
+    if result['warnings']:
+        print("\n⚠️ التحذيرات:")
+        for w in result['warnings']:
+            print(f"   - {w}")
+
 def main():
     parser = argparse.ArgumentParser(description="لسان قريش - أداة الفحص الاستخباراتي الدفاعي")
     subparsers = parser.add_subparsers(dest="command", help="الأوامر المتاحة")
@@ -76,6 +90,9 @@ def main():
     parser_ssl = subparsers.add_parser("ssl", help="فحص شهادة SSL لنطاق")
     parser_ssl.add_argument("target", help="النطاق المراد فحص شهادته")
 
+    parser_wallet = subparsers.add_parser("wallet", help="فحص محفظة رقمية (BTC, ETH, TRX)")
+    parser_wallet.add_argument("target", help="عنوان المحفظة")
+
     args = parser.parse_args()
 
     if args.command == "domain":
@@ -86,6 +103,8 @@ def main():
         cmd_ports(args.target)
     elif args.command == "ssl":
         cmd_ssl(args.target)
+    elif args.command == "wallet":
+        cmd_wallet(args.target)
     else:
         parser.print_help()
 
