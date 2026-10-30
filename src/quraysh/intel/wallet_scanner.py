@@ -58,7 +58,6 @@ def scan_wallet(address: str) -> dict:
 
     # 7. Solana (SOL)
     elif re.match(r'^[1-9A-HJ-NP-Za-km-z]{32,44}$', address) and not address.startswith('0x') and not address.startswith('T'):
-        # هذا النمط قد يتداخل مع عناوين أخرى، لكنه مقبول كتقدير
         result["type"] = "Solana (SOL) أو عملة أخرى (Base58)"
         result["valid"] = True
         result["network"] = "Solana Mainnet (محتمل)"
