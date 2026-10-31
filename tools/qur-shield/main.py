@@ -4,6 +4,8 @@ import hashlib
 import platform
 import socket
 import subprocess
+from advanced_url import deep_scan_url
+from username_scanner import scan_username
 
 # 1. فحص البريد
 def check_email():
@@ -137,7 +139,9 @@ def main():
     print("  [5] الفحص السريع (Quick Scan) ⭐")
     print("  [6] كشف الاحتيال (Scam Detection) ⭐")
     print("  [7] الرد السريع (Rapid Response) 🚨")
-    print("  [8] الوضع المجنون (Crazy Mode) 🔥 جديد")
+    print("  [8] الوضع المجنون (Crazy Mode) 🔥")
+    print("  [9] الفحص المتقدم للرابط (Deep URL Scan) ⭐")
+    print("  [10] فحص حساب (Username Scan) ⭐ جديد")
     print("  [0] خروج")
     
     choice = input("\nاختر رقم: ").strip()
@@ -150,6 +154,14 @@ def main():
     elif choice == "6": scam_detection()
     elif choice == "7": rapid_response()
     elif choice == "8": crazy_mode()
+    elif choice == "10":
+        username = input("أدخل اسم المستخدم (مثل trading.with.quman): ").strip()
+        scan_username(username)
+    elif choice == "9":
+        url = input("أدخل الرابط: ").strip()
+        if not url.startswith("http"):
+            url = "https://" + url
+        deep_scan_url(url)
     else: print("👋 إلى اللقاء!")
 
 if __name__ == "__main__":
