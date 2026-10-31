@@ -1,9 +1,10 @@
 import re
+import requests
 
-def scan_username(username: str):
-    print(f"\n[*] جاري فحص الحساب: {username}\n")
+def scan_username(username: str, platform: str = "tiktok"):
+    print(f"\n[*] جاري فحص الحساب: {username} (المنصة: {platform})\n")
     
-    # الكلمات المشبوهة في أسماء الحسابات
+    # 1. فحص الكلمات المشبوهة
     suspicious_words = [
         "trading", "invest", "crypto", "bitcoin", "giveaway", 
         "free", "profit", "money", "rich", "winner", "prize",
@@ -21,7 +22,27 @@ def scan_username(username: str):
     else:
         print("  [✅] لم يتم اكتشاف كلمات مشبوهة في الاسم.")
     
-    # نصائح أمنية
+    # 2. التحقق من وجود الحساب (محاولة فتح الرابط)
+    print(f"\n  [*] محاولة التحقق من وجود الحساب على {platform}...")
+    urls = {
+        "tiktok": f"https://www.tiktok.com/@{username}",
+        "instagram": f"https://www.instagram.com/{username}/",
+        "x": f"https://x.com/{username}"
+    }
+    
+    if platform in urls:
+        try:
+            res = requests.get(urls[platform], timeout=10, allow_redirects=True)
+            if res.status_code == 200:
+                print(f"  [✅] الحساب موجود على {platform}.")
+            else:
+                print(f"  [❌] الحساب غير موجود أو محظور (كود: {res.status_code}).")
+        except Exception as e:
+            print(f"  [⚠️] لم نتمكن من التحقق: {str(e)[:50]}")
+    else:
+        print(f"  [⚠️] المنصة {platform} غير مدعومة حالياً.")
+
+    # 3. نصائح أمنية
     print("\n  [💡] نصائح أمنية:")
     print("      - لا ترسل أي أموال أو معلومات شخصية.")
     print("      - تحقق من تاريخ إنشاء الحساب (الحسابات الجديدة مشبوهة).")
