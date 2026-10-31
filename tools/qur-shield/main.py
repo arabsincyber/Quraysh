@@ -128,7 +128,7 @@ def crazy_mode():
 # القائمة الرئيسية
 def main():
     print("\n" + "="*40)
-    print("🛡️  درع الوجبات (Wajabat Shield) v1.7.0")
+    print("🛡️  درع الوجبات (Wajabat Shield) v1.7.0 — نسخة الخم الخصم 🤣")
     print("   أداة حماية شاملة (All-in-One)")
     print("="*40)
     print("\nاختر الخدمة:")
@@ -162,7 +162,7 @@ def main():
         if not url.startswith("http"):
             url = "https://" + url
         deep_scan_url(url)
-    else: print("👋 إلى اللقاء!")
+    else: print("👋 تم تسليم التحية.. والانصراف بسلام (مبدأ الخم الخصم 🤣)")
 
 if __name__ == "__main__":
     main()
